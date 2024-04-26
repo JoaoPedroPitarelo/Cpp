@@ -1,10 +1,9 @@
 #include <iostream>
 #include <locale.h>
-
 using namespace std;
-#include "structs.cpp"
 
-
+#include "./estruturas/cidade.cpp"
+#include "./defines.cpp"
 
 
 
@@ -16,7 +15,8 @@ void inicioPrograma();
 
 int main() {
 
-    cidade cidade;
-    cidade.nome = "Barueri";
-    cout << cidade.nome;
+    cidade lista_cidades;
+
+    cout << lista_cidades.cont;
+
 }
