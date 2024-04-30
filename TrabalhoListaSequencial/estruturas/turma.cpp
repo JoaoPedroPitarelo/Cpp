@@ -1,5 +1,5 @@
 // turma.cpp
-struct turmas {
+struct turma {
     int codigo;
     int codigo_curso;
     int codigo_instrutor;

@@ -1,5 +1,6 @@
-#include "../defines.cpp"
 // cidade.cpp
+#include "../define.cpp"
+
 struct cidade {
     int codigo;
     string nome;
@@ -8,20 +9,33 @@ struct cidade {
 };
 
 // Funções de cidade
-void ler_cidade(cidade lista_cidades[]) {
+void ler_cidade(cidade lista_cidades[T_CIDADE]) {
+    
+    int controle = 0;
+    
     cout << "-----Leitura Cidade-----";
 
-    for (int i = sizeof lista_cidades; i < t_cidade; i++) {
+    for (int i = 0; i < T_CIDADE; i++) {
        
-       
+       if (lista_cidades[i].cont == true) {
+            continue;
+       }
+
         cout << "\nDigite o código: ";
-        cin >> lista_cidades.codigo;
+        cin >> lista_cidades[i].codigo;
         cin.ignore();
 
         cout << " Digite o nome: ";
-        getline(cin, lista_cidades.nome);
+        getline(cin, lista_cidades[i].nome);
 
         cout << "  Digite o UF: ";
-        cin >> lista_cidades.estado;
+        cin >> lista_cidades[i].estado;
+
+
+        cout << "\nDeseja adicionar mais uma cidade? (0 = N) (1 = S)\n";
+        cin >> controle;
+
+        if (controle == 0)
+            break;
     }
 }
