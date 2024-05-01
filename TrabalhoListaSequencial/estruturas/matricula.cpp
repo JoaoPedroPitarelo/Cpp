@@ -1,5 +1,5 @@
 // matricula.cpp
-struct matriculas {
+struct matricula {
     int codigo;
     int codigo_aluno;
     int codigo_turma;

@@ -1,4 +1,6 @@
 // turma.cpp
+#define T_TURMA 10
+
 struct turma {
     int codigo;
     int codigo_curso;
