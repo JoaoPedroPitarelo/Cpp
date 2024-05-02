@@ -1,3 +1,4 @@
+// main.cpp
 #include <iostream>
 #include <locale.h>
 #include <stdlib.h>
@@ -27,7 +28,7 @@ void inicioPrograma() {
     aluno lista_alunos_A[T_ALUNO], lista_alunos_S[T_ALUNO],lista_alunos_T[T_ALUNO]; 
     matricula lista_matriculas_A[T_CURSO * T_ALUNO], lista_matriculas_S[T_CURSO * T_ALUNO], lista_matriculas_T[T_CURSO * T_ALUNO];
 
-    int contS, contT = 0, contA;
+    int contS = 0, contT = 0, contA = 0;
 
     while (true) {
         int opcao = 0;
@@ -40,9 +41,21 @@ void inicioPrograma() {
 
         switch (opcao) {
         case 1:
-            //system("clear");
-            ler_cidade(lista_cidades_S, lista_cidades_T, lista_cidades_A, contT);
+            //system("clear")
+            if (contS == 0) {
+                ler_cidade_S(lista_cidades_S, contS);
+            }
+            else {
+                ler_cidade_T(lista_cidades_T, contT);            
+            }
+
+           // imprimir(lista_cidades_S); cout << "\n\n";
+           // imprimir(lista_cidades_T); cout << "\n\n";
+
+            incluir_cidade(lista_cidades_S, lista_cidades_T, lista_cidades_A);
+
             imprimir(lista_cidades_A);
+        
             break;
         case 2:
             system("clear");
