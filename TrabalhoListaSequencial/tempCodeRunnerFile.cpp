@@ -1,3 +1,6 @@
-for (int i = 0; i < T_CIDADE; i++) {
-            //    cout << lista_cidades_T[i].codigo << " \n";
-            // }
+
+            // cout << "lista S:\n";
+            // imprimir(lista_cidades_S); cout << "\n\n";
+
+            // cout << "Lista T:\n";
+            // imprimir(lista_cidades_T); cout << "\n\n";

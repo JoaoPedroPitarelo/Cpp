@@ -49,11 +49,15 @@ void inicioPrograma() {
                 ler_cidade_T(lista_cidades_T, contT);            
             }
 
-           // imprimir(lista_cidades_S); cout << "\n\n";
-           // imprimir(lista_cidades_T); cout << "\n\n";
+            // cout << "lista S:\n";
+            // imprimir(lista_cidades_S); cout << "\n\n";
 
-            incluir_cidade(lista_cidades_S, lista_cidades_T, lista_cidades_A);
+            // cout << "Lista T:\n";
+            // imprimir(lista_cidades_T); cout << "\n\n";
 
+            incluir_cidade(lista_cidades_S, lista_cidades_T, lista_cidades_A, contS, contT);
+
+            cout << "lista A:\n";
             imprimir(lista_cidades_A);
         
             break;

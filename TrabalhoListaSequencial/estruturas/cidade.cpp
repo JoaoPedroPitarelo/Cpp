@@ -9,12 +9,12 @@ struct cidade {
 
 // Funções de Cidade
 
-void incluir_cidade(cidade lista_cidades_S[T_CIDADE], cidade lista_cidades_T[T_CIDADE], cidade lista_cidades_A[T_CIDADE]) {
+void incluir_cidade(cidade lista_cidades_S[T_CIDADE], cidade lista_cidades_T[T_CIDADE], cidade lista_cidades_A[T_CIDADE], int &contS, int &contT) {
 
     int i = 0, j = 0, k = 0;
     //  S      T      A
 
-    while (i < T_CIDADE && j < T_CIDADE) {
+    while (i < contS+1 && j < contT) {
         
         if (lista_cidades_S[i].codigo < lista_cidades_T[j].codigo) {
             lista_cidades_A[k] = lista_cidades_S[i];
@@ -29,17 +29,18 @@ void incluir_cidade(cidade lista_cidades_S[T_CIDADE], cidade lista_cidades_T[T_C
         k++;
     }
 
+    cout << "\n K = " << k;
+
     cout << "\n i = " << i << "\n";
-    while (i < T_CIDADE) {
-        cout << "\n" << lista_cidades_S[i].codigo;
-        lista_cidades_A[k].codigo = lista_cidades_S[i].codigo;
+    while (i < contS) {
+        cout << "\n K = " << k;
+        lista_cidades_A[k] = lista_cidades_S[i];
         i++;
         k++;
     }
 
     cout << "\n j = " << j << "\n";
-    while (j < T_CIDADE) {
-        //cout << "teste2\n";
+    while (j < contT) {
         lista_cidades_A[k] = lista_cidades_T[j];
         j++;
         k++;
