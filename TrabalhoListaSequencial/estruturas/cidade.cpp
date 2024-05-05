@@ -14,12 +14,13 @@ void incluir_cidade(cidade lista_cidades_S[T_CIDADE], cidade lista_cidades_T[T_C
     int i = 0, j = 0, k = 0;
     //  S      T      A
 
-    while (i < contS+1 && j < contT) {
+    cout << "contT = " << contT;
+    cout << "contS = " << contS;
+    while (i < contS && j < contT) {
         
         if (lista_cidades_S[i].codigo < lista_cidades_T[j].codigo) {
             lista_cidades_A[k] = lista_cidades_S[i];
             i++;
-         
         }
         else {
             lista_cidades_A[k] = lista_cidades_T[j];
@@ -48,13 +49,13 @@ void incluir_cidade(cidade lista_cidades_S[T_CIDADE], cidade lista_cidades_T[T_C
 }
 
 // Ordenar arquivo
-void ordenar_arquivo(cidade lista_cidades_S[], int contS) {
-    for (int i = contS - 1; i > 0; i--) {
+void ordenar_arquivo(cidade lista_cidades[], int cont) {
+    for (int i = cont; i > 0; i--) {
         for (int j = 0; j < i; j++) {
-            if (lista_cidades_S[j].codigo > lista_cidades_S[j + 1].codigo) {
-                cidade aux = lista_cidades_S[j+1];
-                lista_cidades_S[j+1] = lista_cidades_S[j];
-                lista_cidades_S[j] = aux;
+            if (lista_cidades[j].codigo > lista_cidades[j + 1].codigo) {
+                cidade aux = lista_cidades[j+1];
+                lista_cidades[j+1] = lista_cidades[j];
+                lista_cidades[j] = aux;
             }
         }
     }
@@ -73,7 +74,7 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
     
     int controle = 0;
 
-    for (; contS < T_CIDADE; contS++) {
+    for (int i = 0; i < T_CIDADE; i++) {
         cout << "---- Ler Cidade - Primeira Leitura ----\n";
 
         cout << "Digite o código da cidade: ";
@@ -89,12 +90,14 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
         cout << "\nDeseja adicionar mais uma cidade: (0 = NAO) (1 = SIM)";
         cin >> controle;
 
+        contS++;
+
         if (controle == 0)
             break;
     }
 
     // Ordenação do arquivoS - BubleSort
-    ordenar_arquivo(lista_cidades_S, contS + 1);
+    ordenar_arquivo(lista_cidades_S, (contS - 1));
 }
 
 // Demais leituras
@@ -127,6 +130,15 @@ void ler_cidade_T(cidade lista_cidades_T[], int &contT) {
     }
 
     // Ordenação do arquivoT - BubleSort
-    ordenar_arquivo(lista_cidades_T, contT);
+    ordenar_arquivo(lista_cidades_T, (contT - 1));
+}
 
+void arquivoA_passa_arquivoS(cidade lista_cidades_A[T_CIDADE], cidade lista_cidades_S[T_CIDADE]) {
+    
+    for (int i = 0; i < T_CIDADE; i++) {
+        cout << "\nLista s :" << i << " = " << lista_cidades_S[i].codigo;
+        lista_cidades_S[i] = lista_cidades_A[i];
+
+        cout << "\nLista s :" << i << " = " << lista_cidades_S[i].codigo << "\n";
+    }
 }

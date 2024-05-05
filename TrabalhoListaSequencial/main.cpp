@@ -22,16 +22,22 @@ int main() {
 
 void inicioPrograma() {
 
-    cidade lista_cidades_A[T_CIDADE], lista_cidades_S[T_CIDADE], lista_cidades_T[T_CIDADE];
-    curso lista_cursos_A[T_CURSO], lista_cursos_S[T_CURSO],lista_cursos_T[T_CURSO];
-    turma lista_turmas_A[T_TURMA], lista_turmas_S[T_TURMA],lista_turmas_T[T_TURMA];
-    aluno lista_alunos_A[T_ALUNO], lista_alunos_S[T_ALUNO],lista_alunos_T[T_ALUNO]; 
-    matricula lista_matriculas_A[T_CURSO * T_ALUNO], lista_matriculas_S[T_CURSO * T_ALUNO], lista_matriculas_T[T_CURSO * T_ALUNO];
+    cidade lista_cidades_A[T_CIDADE], lista_cidades_S[T_CIDADE];
+    curso lista_cursos_A[T_CURSO], lista_cursos_S[T_CURSO];
+    turma lista_turmas_A[T_TURMA], lista_turmas_S[T_TURMA];
+    aluno lista_alunos_A[T_ALUNO], lista_alunos_S[T_ALUNO]; 
+    matricula lista_matriculas_A[T_CURSO * T_ALUNO], lista_matriculas_S[T_CURSO * T_ALUNO];
 
     int contS = 0, contT = 0, contA = 0;
 
     while (true) {
-        int opcao = 0;
+        int opcao;
+
+        cidade lista_cidades_T[T_CIDADE] = {};
+        curso lista_cursos_T[T_CURSO] = {};
+        turma lista_turmas_T[T_TURMA] = {};
+        aluno lista_alunos_T[T_ALUNO] = {};
+        matricula lista_matriculas_T[T_CURSO * T_ALUNO] = {};
 
         //system("clear");
         cout << "OPÇÕES: [1] Adicionar cidade\n";
@@ -49,17 +55,13 @@ void inicioPrograma() {
                 ler_cidade_T(lista_cidades_T, contT);            
             }
 
-            // cout << "lista S:\n";
-            // imprimir(lista_cidades_S); cout << "\n\n";
-
-            // cout << "Lista T:\n";
-            // imprimir(lista_cidades_T); cout << "\n\n";
-
             incluir_cidade(lista_cidades_S, lista_cidades_T, lista_cidades_A, contS, contT);
+            arquivoA_passa_arquivoS(lista_cidades_A, lista_cidades_S);
 
-            cout << "lista A:\n";
+            imprimir(lista_cidades_S);
+            cout << "\n\n";
             imprimir(lista_cidades_A);
-        
+
             break;
         case 2:
             system("clear");
