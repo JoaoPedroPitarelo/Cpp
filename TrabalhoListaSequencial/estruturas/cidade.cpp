@@ -8,21 +8,24 @@ struct cidade {
 };
 
 // Funções de Cidade
-
-void incluir_cidade(cidade lista_cidades_S[T_CIDADE], cidade lista_cidades_T[T_CIDADE], cidade lista_cidades_A[T_CIDADE], int &contS, int &contT) {
+void incluir_cidade(cidade lista_cidades_S[T_CIDADE],
+                    cidade lista_cidades_T[T_CIDADE],
+                    cidade lista_cidades_A[T_CIDADE],
+                    int &contS,
+                    int &contT,
+                    int &contA) {
 
     int i = 0, j = 0, k = 0;
-    //  S      T      A
 
-    cout << "contT = " << contT;
-    cout << "contS = " << contS;
     while (i < contS && j < contT) {
         
         if (lista_cidades_S[i].codigo < lista_cidades_T[j].codigo) {
+
             lista_cidades_A[k] = lista_cidades_S[i];
             i++;
         }
         else {
+
             lista_cidades_A[k] = lista_cidades_T[j];
             j++;
         }
@@ -30,25 +33,24 @@ void incluir_cidade(cidade lista_cidades_S[T_CIDADE], cidade lista_cidades_T[T_C
         k++;
     }
 
-    cout << "\n K = " << k;
-
-    cout << "\n i = " << i << "\n";
     while (i < contS) {
-        cout << "\n K = " << k;
+    
         lista_cidades_A[k] = lista_cidades_S[i];
         i++;
         k++;
     }
 
-    cout << "\n j = " << j << "\n";
     while (j < contT) {
+
         lista_cidades_A[k] = lista_cidades_T[j];
         j++;
         k++;
     }
+
+    contA = k;
 }
 
-// Ordenar arquivo
+// Ordenar lista - bubleSort
 void ordenar_arquivo(cidade lista_cidades[], int cont) {
     for (int i = cont; i > 0; i--) {
         for (int j = 0; j < i; j++) {
@@ -62,10 +64,56 @@ void ordenar_arquivo(cidade lista_cidades[], int cont) {
 }
 
 // Imprimir
-void imprimir(cidade lista_cidades[T_CIDADE]) {
+void listar_cidades(cidade lista_cidades[], int contA_cidade) {
 
-    for (int i = 0; i < T_CIDADE; i++) {
-        cout << lista_cidades[i].codigo << " \n";
+    if (contA_cidade == 0) {
+        cout << "\n NÃO há cidades adicionadas!\n";
+    }
+    else {
+
+        cout << "Cidades adicionadas: " << contA_cidade;
+        cout << "\nCidades restantes  : " << (T_CIDADE - contA_cidade) << "\n";
+
+        for (int i = 0; i < contA_cidade; i++) {
+            cout << "\nCódigo: " << lista_cidades[i].codigo;
+            cout << "\n Nome: " << lista_cidades[i].nome;
+            cout << "\n  Estado: " << lista_cidades[i].estado << "\n";
+        }
+    }
+}
+
+// Buscar cidade
+int buscar_cidade(cidade lista_cidades[], int cidade_procurada, int contA) {
+
+    int inicio = 0;
+    int fim = contA;
+    int meio = ((inicio + fim) / 2);
+
+    for (int i = 0; i < contA; i++) {
+    
+        // Encotrou a cidade
+        if (cidade_procurada == lista_cidades[i].codigo) {
+            return lista_cidades[i].codigo;
+        }
+
+        // Caso não exista o código da pessoa
+        if (inicio == fim) {
+            return -1;
+        }
+
+        if (cidade_procurada > lista_cidades[meio].codigo) {
+          
+            inicio = meio + 1;
+            meio = ((inicio + fim) / 2);
+            continue;
+        }
+
+        if (cidade_procurada < lista_cidades[meio].codigo) {
+            
+            fim = meio - 1;
+            meio = ((inicio + fim) / 2);
+            continue;
+        }
     }
 }
 
@@ -75,7 +123,7 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
     int controle = 0;
 
     for (int i = 0; i < T_CIDADE; i++) {
-        cout << "---- Ler Cidade - Primeira Leitura ----\n";
+        cout << "---- Ler Cidade ----\n";
 
         cout << "Digite o código da cidade: ";
         cin >> lista_cidades_S[contS].codigo;
@@ -87,13 +135,12 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
         cout << "  Digite o UF: ";
         cin >> lista_cidades_S[contS].estado;
 
-        cout << "\nDeseja adicionar mais uma cidade: (0 = NAO) (1 = SIM)";
+        cout << "\nDeseja adicionar mais uma cidade: (0 = NAO) (1 = SIM)\n";
         cin >> controle;
 
         contS++;
 
-        if (controle == 0)
-            break;
+        if (controle == 0) break;
     }
 
     // Ordenação do arquivoS - BubleSort
@@ -101,7 +148,9 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
 }
 
 // Demais leituras
-void ler_cidade_T(cidade lista_cidades_T[], int &contT) {
+void ler_cidade_T(cidade lista_cidades_T[],
+                  int &contT,
+                  int &contS) {
     
     int i = 0;
     contT = 0;
@@ -120,25 +169,26 @@ void ler_cidade_T(cidade lista_cidades_T[], int &contT) {
         cout << "  Digite o UF: ";
         cin >> lista_cidades_T[i].estado;
 
-        cout << "\nDeseja adicionar mais uma cidade: (0 = NAO) (1 = SIM)";
+        cout << "\nDeseja adicionar mais uma cidade: (0 = NAO) (1 = SIM)\n";
         cin >> controle;
 
         contT++;
 
-        if (controle == 0)
-            break;
+        if (controle == 0) break;
     }
 
     // Ordenação do arquivoT - BubleSort
     ordenar_arquivo(lista_cidades_T, (contT - 1));
 }
 
-void arquivoA_passa_arquivoS(cidade lista_cidades_A[T_CIDADE], cidade lista_cidades_S[T_CIDADE]) {
-    
-    for (int i = 0; i < T_CIDADE; i++) {
-        cout << "\nLista s :" << i << " = " << lista_cidades_S[i].codigo;
-        lista_cidades_S[i] = lista_cidades_A[i];
+void arquivoA_passa_arquivoS(cidade lista_cidades_A[T_CIDADE],
+                             cidade lista_cidades_S[T_CIDADE],
+                             int &contS,
+                             int contA) {
 
-        cout << "\nLista s :" << i << " = " << lista_cidades_S[i].codigo << "\n";
+    for (int i = 0; i < contA; i++) {
+        lista_cidades_S[i] = lista_cidades_A[i];
     }
+
+    contS = contA;
 }
