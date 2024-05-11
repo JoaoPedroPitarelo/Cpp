@@ -49,12 +49,13 @@ void inicioPrograma() {
                 ler_cidade_S(lista_cidades_S, contS_cidade);
             }
             else {
-                ler_cidade_T(lista_cidades_T, contT_cidade, contS_cidade);          
+                ler_cidade_T(lista_cidades_T, lista_cidades_S, contT_cidade, contS_cidade);          
             }
 
             incluir_cidade(lista_cidades_S, lista_cidades_T, lista_cidades_A, contS_cidade, contT_cidade, contA_cidade);
             arquivoA_passa_arquivoS(lista_cidades_A, lista_cidades_S, contS_cidade, contA_cidade);
             break;
+
         case 11:
             system("clear");
             listar_cidades(lista_cidades_S, contA_cidade);
@@ -63,6 +64,7 @@ void inicioPrograma() {
             cin.ignore();
             getline(cin, pause);
             break;
+
         case 111:
             system("clear");
             int codigo_cidade_procurada = 0;
@@ -70,20 +72,22 @@ void inicioPrograma() {
             cout << "\n Digite o código da cidade procurada: ";
             cin >> codigo_cidade_procurada;
 
-            int resultado_busca = buscar_cidade(lista_cidades_A, codigo_cidade_procurada, contA_cidade);
+            int resultado_busca = buscar_cidade(lista_cidades_S, codigo_cidade_procurada, contA_cidade);
 
             if (resultado_busca != -1) {
                 
                 cout << "\nENCONTRADA!\n";
 
-                cout << "\nCódigo: " << lista_cidades_A[resultado_busca].codigo;
-                cout << "\n Nome: " << lista_cidades_A[resultado_busca].nome;
-                cout << "\n  Estado: " << lista_cidades_A[resultado_busca].estado << "\n";
+                cout << "\nCódigo: " << lista_cidades_S[resultado_busca].codigo;
+                cout << "\n Nome: " << lista_cidades_S[resultado_busca].nome;
+                cout << "\n  Estado: " << lista_cidades_S[resultado_busca].estado << "\n";
+
+                cout << "\n Pressione qualquer tecla para continuar: \n";
+                cin.ignore();
+            getline(cin, pause);
             } else {
 
                 cout << "\n Cidade NÃO ENCONTRADA!\n";
-                cout << resultado_busca;
-
                 cout << "\n Pressione qualquer tecla para continuar: \n";
                 cin.ignore();
                 getline(cin, pause);

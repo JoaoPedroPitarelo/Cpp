@@ -93,7 +93,7 @@ int buscar_cidade(cidade lista_cidades[], int cidade_procurada, int contA) {
     
         // Encotrou a cidade
         if (cidade_procurada == lista_cidades[i].codigo) {
-            return lista_cidades[i].codigo;
+            return i;
         }
 
         // Caso não exista o código da pessoa
@@ -121,24 +121,49 @@ int buscar_cidade(cidade lista_cidades[], int cidade_procurada, int contA) {
 void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
     
     int controle = 0;
+   
+    for (int i = 0; i < T_CIDADE;) {
+        
+        cidade cidade_controle;
+        bool codigo_duplicado = false;
 
-    for (int i = 0; i < T_CIDADE; i++) {
         cout << "---- Ler Cidade ----\n";
 
         cout << "Digite o código da cidade: ";
-        cin >> lista_cidades_S[contS].codigo;
+        cin >> cidade_controle.codigo;
         cin.ignore();
 
+        // Verifição para ver se o usuário não está digitando um mesmo código já adicionado
+        if (i != 0) {
+
+            for (int j = 0; j < T_CIDADE; j++) {
+
+                if (cidade_controle.codigo == lista_cidades_S[j].codigo) {
+                    
+                    cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
+                    codigo_duplicado = true;
+                    break;
+                }
+            }
+        }
+
+        if (codigo_duplicado) {
+            continue;
+        }
+
         cout << " Digite o nome da cidade: ";
-        getline(cin, lista_cidades_S[contS].nome);
+        getline(cin, cidade_controle.nome);
 
         cout << "  Digite o UF: ";
-        cin >> lista_cidades_S[contS].estado;
+        cin >> cidade_controle.estado;
+
+        lista_cidades_S[contS] = cidade_controle;
 
         cout << "\nDeseja adicionar mais uma cidade: (0 = NAO) (1 = SIM)\n";
         cin >> controle;
 
         contS++;
+        i++;
 
         if (controle == 0) break;
     }
@@ -149,6 +174,7 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
 
 // Demais leituras
 void ler_cidade_T(cidade lista_cidades_T[],
+                  cidade lista_cidades_S[],
                   int &contT,
                   int &contS) {
     
@@ -156,23 +182,46 @@ void ler_cidade_T(cidade lista_cidades_T[],
     contT = 0;
     int controle = 0;
 
-    for (; i < T_CIDADE; i++) {
+    for (; i < T_CIDADE;) {
+
+        cidade cidade_controle;
+        bool codigo_duplicado = false;
+
         cout << "---- Ler Cidade ----\n";
 
         cout << "Digite o código da cidade: ";
-        cin >> lista_cidades_T[i].codigo;
+        cin >> cidade_controle.codigo;
         cin.ignore();
+   
+        // Verifição para ver se o usuário não está digitando um mesmo código já adicionado
+        for (int j = 0; j < T_CIDADE; j++) {
+            
+            if (cidade_controle.codigo == lista_cidades_S[j].codigo ||
+                cidade_controle.codigo == lista_cidades_T[j].codigo) {
+
+                cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
+                codigo_duplicado = true;
+                break;
+            }
+        }
+        
+        if (codigo_duplicado) {
+            continue;
+        }
 
         cout << " Digite o nome da cidade: ";
-        getline(cin, lista_cidades_T[i].nome);
+        getline(cin, cidade_controle.nome);
 
         cout << "  Digite o UF: ";
-        cin >> lista_cidades_T[i].estado;
+        cin >> cidade_controle.estado;
+
+        lista_cidades_T[i] = cidade_controle;
 
         cout << "\nDeseja adicionar mais uma cidade: (0 = NAO) (1 = SIM)\n";
         cin >> controle;
 
         contT++;
+        i++;
 
         if (controle == 0) break;
     }
