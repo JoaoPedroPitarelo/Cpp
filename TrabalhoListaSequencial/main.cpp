@@ -19,6 +19,7 @@ int main() {
 void inicioPrograma() {
 
     int contS_cidade = 0, contT_cidade = 0, contA_cidade = 0;
+    int contS_curso = 0, contT_curso = 0, contA_curso = 0;
 
     cidade lista_cidades_S[T_CIDADE];
     curso lista_cursos_S[T_CURSO];
@@ -36,28 +37,28 @@ void inicioPrograma() {
         aluno lista_alunos_T[T_ALUNO] =    {}; aluno lista_alunos_A[T_ALUNO] =    {};
         matricula lista_matriculas_T[T_CURSO * T_ALUNO] = {};  matricula lista_matriculas_A[T_CURSO * T_ALUNO] = {};
 
-        system("clear");
+        //system("clear");
         cout << "OPÇÕES: [1] Adicionar cidade [11] Listar cidades\n";
-        cout << "        [2] Adicionar Curso\n";
+        cout << "        [2] Adicionar Curso  [22] Listar cursos\n";
         cout << "Escolha: ";
         cin >> opcao;
 
         switch (opcao) {
         case 1:
-            system("clear");
+            //system("clear");
             if (contS_cidade == 0) {
                 ler_cidade_S(lista_cidades_S, contS_cidade);
             }
             else {
-                ler_cidade_T(lista_cidades_T, lista_cidades_S, contT_cidade, contS_cidade);          
+                ler_cidade_T(lista_cidades_T, lista_cidades_S, contT_cidade);          
             }
 
             incluir_cidade(lista_cidades_S, lista_cidades_T, lista_cidades_A, contS_cidade, contT_cidade, contA_cidade);
-            arquivoA_passa_arquivoS(lista_cidades_A, lista_cidades_S, contS_cidade, contA_cidade);
+            arquivoA_passa_arquivoS_cidade(lista_cidades_A, lista_cidades_S, contS_cidade, contA_cidade);
             break;
 
         case 11:
-            system("clear");
+            //system("clear");
             listar_cidades(lista_cidades_S, contA_cidade);
 
             cout << "\n Pressione qualquer tecla para continuar: \n";
@@ -65,34 +66,67 @@ void inicioPrograma() {
             getline(cin, pause);
             break;
 
-        case 111:
-            system("clear");
-            int codigo_cidade_procurada = 0;
-
-            cout << "\n Digite o código da cidade procurada: ";
-            cin >> codigo_cidade_procurada;
-
-            int resultado_busca = buscar_cidade(lista_cidades_S, codigo_cidade_procurada, contA_cidade);
-
-            if (resultado_busca != -1) {
-                
-                cout << "\nENCONTRADA!\n";
-
-                cout << "\nCódigo: " << lista_cidades_S[resultado_busca].codigo;
-                cout << "\n Nome: " << lista_cidades_S[resultado_busca].nome;
-                cout << "\n  Estado: " << lista_cidades_S[resultado_busca].estado << "\n";
-
-                cout << "\n Pressione qualquer tecla para continuar: \n";
-                cin.ignore();
-            getline(cin, pause);
-            } else {
-
-                cout << "\n Cidade NÃO ENCONTRADA!\n";
-                cout << "\n Pressione qualquer tecla para continuar: \n";
-                cin.ignore();
-                getline(cin, pause);
+        case 2:
+            //system("clear");
+            if (contS_curso == 0) {
+                ler_curso_S(lista_cursos_S, contS_curso);
             }
+            else {
+                ler_curso_T(lista_cursos_T, lista_cursos_S, contT_curso);
+            }
+
+            // debugs ------------------------------------
+            cout << "\nANTES lista S: " << "\n";
+            for (int i = 0; i < T_CURSO; i++) {
+                cout << "Codigo: " << lista_cursos_S[i].codigo;
+                cout << "\n Descrição: " << lista_cursos_S[i].descricao << "\n";;
+            }
+
+            cout << "\nlista T: " << "\n";
+            for (int i = 0; i < T_CURSO; i++) {
+                cout << "Codigo: " << lista_cursos_T[i].codigo;
+                cout << "\n Descrição: " << lista_cursos_T[i].descricao << "\n";
+            }
+
+            cout << "\nlista A: " << "\n";
+            for (int i = 0; i < T_CURSO; i++) {
+                cout << "Codigo: " << lista_cursos_A[i].codigo;
+                cout << "\n Descrição: " << lista_cursos_A[i].descricao << "\n";
+            }
+
+            incluir_curso(lista_cursos_S, lista_cursos_T, lista_cursos_A, contS_curso, contT_curso, contA_curso);
+            arquivoA_passa_arquivoS_curso(lista_cursos_A, lista_cursos_S, contS_curso, contA_curso);
+
+            cout << "\nDEPOIS lista S: " << "\n";
+            for (int i = 0; i < T_CURSO; i++) {
+                cout << "Codigo: " << lista_cursos_S[i].codigo;
+                cout << "\n Descrição: " << lista_cursos_S[i].descricao << "\n";;
+            }
+
+            cout << "\nlista T: " << "\n";
+            for (int i = 0; i < T_CURSO; i++) {
+                cout << "Codigo: " << lista_cursos_T[i].codigo;
+                cout << "\n Descrição: " << lista_cursos_T[i].descricao << "\n";
+            }
+
+            cout << "\nlista A: " << "\n";
+            for (int i = 0; i < T_CURSO; i++) {
+                cout << "Codigo: " << lista_cursos_A[i].codigo;
+                cout << "\n Descrição: " << lista_cursos_A[i].descricao << "\n";
+            }
+
             break;
+
+        case 22:
+            //system("clear");
+
+            listar_cursos(lista_cursos_S, contA_curso);
+                
+            cout << "\n Pressione qualquer tecla para continuar: \n";
+            cin.ignore();
+            getline(cin, pause);
+            break;
+
         }
     }
 }

@@ -50,7 +50,7 @@ void incluir_cidade(cidade lista_cidades_S[T_CIDADE],
     contA = k;
 }
 
-// Ordenar lista - bubleSort
+// Ordenar lista - bubbleSort
 void ordenar_arquivo(cidade lista_cidades[], int cont) {
     for (int i = cont; i > 0; i--) {
         for (int j = 0; j < i; j++) {
@@ -168,15 +168,14 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
         if (controle == 0) break;
     }
 
-    // Ordenação do arquivoS - BubleSort
+    // Ordenação do arquivoS - BubbleSort
     ordenar_arquivo(lista_cidades_S, (contS - 1));
 }
 
 // Demais leituras
 void ler_cidade_T(cidade lista_cidades_T[],
                   cidade lista_cidades_S[],
-                  int &contT,
-                  int &contS) {
+                  int &contT) {
     
     int i = 0;
     contT = 0;
@@ -205,9 +204,8 @@ void ler_cidade_T(cidade lista_cidades_T[],
             }
         }
         
-        if (codigo_duplicado) {
-            continue;
-        }
+        if (codigo_duplicado) continue;
+
 
         cout << " Digite o nome da cidade: ";
         getline(cin, cidade_controle.nome);
@@ -230,10 +228,10 @@ void ler_cidade_T(cidade lista_cidades_T[],
     ordenar_arquivo(lista_cidades_T, (contT - 1));
 }
 
-void arquivoA_passa_arquivoS(cidade lista_cidades_A[T_CIDADE],
-                             cidade lista_cidades_S[T_CIDADE],
-                             int &contS,
-                             int contA) {
+void arquivoA_passa_arquivoS_cidade(cidade lista_cidades_A[T_CIDADE],
+                                    cidade lista_cidades_S[T_CIDADE],
+                                    int &contS,
+                                    int contA) {
 
     for (int i = 0; i < contA; i++) {
         lista_cidades_S[i] = lista_cidades_A[i];
