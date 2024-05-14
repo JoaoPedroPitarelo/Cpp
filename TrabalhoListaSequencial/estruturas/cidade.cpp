@@ -147,9 +147,7 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
             }
         }
 
-        if (codigo_duplicado) {
-            continue;
-        }
+        if (codigo_duplicado) continue;
 
         cout << " Digite o nome da cidade: ";
         getline(cin, cidade_controle.nome);

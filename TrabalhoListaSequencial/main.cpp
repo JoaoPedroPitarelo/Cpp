@@ -18,16 +18,18 @@ int main() {
 
 void inicioPrograma() {
 
-    int contS_cidade = 0, contT_cidade = 0, contA_cidade = 0;
-    int contS_curso = 0, contT_curso = 0, contA_curso = 0;
-
     cidade lista_cidades_S[T_CIDADE];
     curso lista_cursos_S[T_CURSO];
     turma lista_turmas_S[T_TURMA];
     aluno lista_alunos_S[T_ALUNO]; 
     matricula lista_matriculas_S[T_CURSO * T_ALUNO];
 
+    int contS_cidade = 0, contT_cidade = 0, contA_cidade = 0;
+    int contS_curso = 0, contT_curso = 0, contA_curso = 0;
+    int contS_instrutor = 0, contT_instrutor = 0, contA_instrutor = 0; 
+
     while (true) {
+
         int opcao;
         string pause = " ";
 
@@ -38,8 +40,11 @@ void inicioPrograma() {
         matricula lista_matriculas_T[T_CURSO * T_ALUNO] = {};  matricula lista_matriculas_A[T_CURSO * T_ALUNO] = {};
 
         system("clear");
-        cout << "OPÇÕES: [1] Adicionar cidade [11] Listar cidades\n";
-        cout << "        [2] Adicionar Curso  [22] Listar cursos\n";
+        cout << "OPÇÕES: [1] Adicionar cidade    [11] Buscar cidade\n";
+        cout << "        [2] Adicionar Curso     [22] Listar cursos\n";
+        cout << "        [3] Adicionar Instrutor [33] Listar instrutor\n";
+        
+
         cout << "Escolha: ";
         cin >> opcao;
 
@@ -87,7 +92,19 @@ void inicioPrograma() {
             cin.ignore();
             getline(cin, pause);
             break;
+        
+        case 3:
+            system("clear");
+            if (contS_instrutor == 0) {
+                // ler_instrutor_S(lista_instrutores_S, contS_instrutor);
+            }
+            else {
+                // ler_instrutor_T(lista_instrutores_S, lista_instrutores_T, contT_instrutor, contS_instrutor);
+            }
 
+            // inclur_instrutor(lista_instrutores_S, lista_instrutores_T, lista_instrutores_A, contS_instrutor, contT_instrutor, contA_instrutor);
+            //arquivoA_passa_arquivoS_instrutor(lista_instrutores_A, lista_instrutores_S, contS_instrutor, contA_instrutor);
+            break;
         }
     }
 }
