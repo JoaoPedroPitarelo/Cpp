@@ -175,13 +175,24 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
 // Demais leituras
 void ler_cidade_T(cidade lista_cidades_T[],
                   cidade lista_cidades_S[],
-                  int &contT) {
+                  int &contT,
+                  int contS) {
     
     int i = 0;
     contT = 0;
     int controle = 0;
 
     for (; i < T_CIDADE;) {
+
+        if (contS == T_CIDADE) {
+
+            string pause = " ";
+            cout << "\n Limite alcançado! Você NÃO pode adicionar mais cidades!";
+            cout << "\n Pressione qualquer tecla para continuar: \n";
+            cin.ignore();
+            getline(cin, pause);
+            break;
+        }
 
         cidade cidade_controle;
         bool codigo_duplicado = false;
@@ -218,6 +229,7 @@ void ler_cidade_T(cidade lista_cidades_T[],
         cout << "\nDeseja adicionar mais uma cidade: (0 = NAO) (1 = SIM)\n";
         cin >> controle;
 
+        contS++;
         contT++;
         i++;
 

@@ -87,11 +87,11 @@ void ler_curso_S(curso lista_cursos_S[], int &contS) {
     int controle = 0;
 
     for (int i = 0; i < T_CURSO;) {
-
+        
         curso curso_controle;
         bool codigo_duplicado = false;
 
-        cout << "\n-----Leitura Curso primeira leitura-----";
+        cout << "\n-----Leitura Curso-----";
 
         cout << "\nDigite o código: ";
         cin >> curso_controle.codigo;
@@ -127,9 +127,6 @@ void ler_curso_S(curso lista_cursos_S[], int &contS) {
         cin >> controle;
 
         contS++;
-
-        cout << "cont S dentro de ler: " << contS << "\n";
-
         i++;
 
         if (controle == 0) break;
@@ -142,13 +139,24 @@ void ler_curso_S(curso lista_cursos_S[], int &contS) {
 // Demais leituras
 void ler_curso_T(curso lista_cursos_S[],
                  curso lista_cursos_T[],
-                 int &contT) {
+                 int &contT,
+                 int contS) {
 
     int i = 0;
     contT = 0;
     int controle = 0;
 
     for (; i < T_CURSO;) {
+
+        if (contS == T_CURSO) {
+
+            string pause = " ";
+            cout << "\n Limite alcançado! Você NÃO pode adicionar mais cursos!";
+            cout << "\n Pressione qualquer tecla para continuar: \n";
+            cin.ignore();
+            getline(cin, pause);
+            break;
+        }
 
         curso curso_controle;
         bool codigo_duplicado = false;
@@ -182,16 +190,11 @@ void ler_curso_T(curso lista_cursos_S[],
 
         lista_cursos_T[contT] = curso_controle;
 
-        cout << "\nlista T dentro da função: " << "\n";
-        for (int i = 0; i < T_CURSO; i++) {
-            cout << "Codigo: " << lista_cursos_T[i].codigo;
-            cout << "\n Descrição: " << lista_cursos_T[i].descricao << "\n";
-        }
-        
         cout << "\nDeseja adicionar mais um curso? (0 = NAO) (1 = SIM)\n";
         cin >> controle;
 
         contT++;
+        contS++;
         i++;
 
         if (controle == 0) break;
