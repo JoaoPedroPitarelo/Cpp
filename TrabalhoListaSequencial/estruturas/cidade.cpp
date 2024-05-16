@@ -8,9 +8,9 @@ struct cidade {
 };
 
 // Funções de Cidade
-void incluir_cidade(cidade lista_cidades_S[T_CIDADE],
-                    cidade lista_cidades_T[T_CIDADE],
-                    cidade lista_cidades_A[T_CIDADE],
+void incluir_cidade(cidade lista_cidades_S[],
+                    cidade lista_cidades_T[],
+                    cidade lista_cidades_A[],
                     int &contS,
                     int &contT,
                     int &contA) {
@@ -50,19 +50,6 @@ void incluir_cidade(cidade lista_cidades_S[T_CIDADE],
     contA = k;
 }
 
-// Ordenar lista - bubbleSort
-void ordenar_arquivo(cidade lista_cidades[], int cont) {
-    for (int i = cont; i > 0; i--) {
-        for (int j = 0; j < i; j++) {
-            if (lista_cidades[j].codigo > lista_cidades[j + 1].codigo) {
-                cidade aux = lista_cidades[j+1];
-                lista_cidades[j+1] = lista_cidades[j];
-                lista_cidades[j] = aux;
-            }
-        }
-    }
-}
-
 // Imprimir
 void listar_cidades(cidade lista_cidades[], int contA_cidade) {
 
@@ -71,7 +58,7 @@ void listar_cidades(cidade lista_cidades[], int contA_cidade) {
     }
     else {
 
-        cout << "Cidades adicionadas: " << contA_cidade;
+        cout << "\n\nCidades adicionadas: " << contA_cidade;
         cout << "\nCidades restantes  : " << (T_CIDADE - contA_cidade) << "\n";
 
         for (int i = 0; i < contA_cidade; i++) {
@@ -165,9 +152,6 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
 
         if (controle == 0) break;
     }
-
-    // Ordenação do arquivoS - BubbleSort
-    ordenar_arquivo(lista_cidades_S, (contS - 1));
 }
 
 // Demais leituras
@@ -233,9 +217,6 @@ void ler_cidade_T(cidade lista_cidades_T[],
 
         if (controle == 0) break;
     }
-
-    // Ordenação do arquivoT - BubleSort
-    ordenar_arquivo(lista_cidades_T, (contT - 1));
 }
 
 void arquivoA_passa_arquivoS_cidade(cidade lista_cidades_A[T_CIDADE],

@@ -50,19 +50,6 @@ void incluir_curso(curso lista_cursos_S[T_CURSO],
     contA = k;
 }
 
-// Ordenar lista - bubblesort
-void ordenar_arquivo(curso lista_cursos[], int cont) {
-    for (int i = cont; i > 0; i--) {
-        for (int j = 0; j < i; j++) {
-            if (lista_cursos[j].codigo > lista_cursos[j + 1].codigo) {
-                curso aux = lista_cursos[j+1];
-                lista_cursos[j+1] = lista_cursos[j];
-                lista_cursos[j] = aux;
-            }
-        }
-    }
-}
-
 void listar_cursos(curso lista_cursos[], int contA_curso) {
 
     if (contA_curso == 0) {
@@ -131,9 +118,6 @@ void ler_curso_S(curso lista_cursos_S[], int &contS) {
 
         if (controle == 0) break;
     }
-
-    // Ordenação do arquivoS - BubbleSort
-    ordenar_arquivo(lista_cursos_S, (contS - 1));
 }
 
 // Demais leituras
@@ -199,9 +183,6 @@ void ler_curso_T(curso lista_cursos_S[],
 
         if (controle == 0) break;
     }
-
-    // Ordenação do arquivoS - BubbleSort
-    ordenar_arquivo(lista_cursos_T, (contT - 1));
 }
 
 void arquivoA_passa_arquivoS_curso(curso lista_cursos_A[T_CURSO],
