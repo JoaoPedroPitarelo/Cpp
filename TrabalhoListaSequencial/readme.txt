@@ -17,11 +17,11 @@ Matrículas: código, código_aluno, código_turma, quantidade_aulas, valor_tota
 
 [x] 1) Escreva funções específicas para a leitura dos dados das estruturas: Cidades, Cursos.
 
-[] 2) Escreva uma função para permitir a inclusão de novos registros na tabela de Instrutores.
+[x] 2) Escreva uma função para permitir a inclusão de novos registros na tabela de Instrutores.
 
-[] 2.1) O programa deverá garantir que o código do instrutor a ser inserido não existe na tabela de Instrutores.
+[x] 2.1) O programa deverá garantir que o código do instrutor a ser inserido não existe na tabela de Instrutores.
 
-quase - [] 2.2) Quando o usuário digitar o código da cidade, o programa deverá buscar este código na tabela de Cidades e exibir o nome da cidade e UF.
+[x] 2.2) Quando o usuário digitar o código da cidade, o programa deverá buscar este código na tabela de Cidades e exibir o nome da cidade e UF.
 
 [] 3) Escreva uma função para permitir a inclusão de novos registros na tabela de Alunos.
 

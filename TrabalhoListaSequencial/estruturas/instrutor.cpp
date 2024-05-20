@@ -126,7 +126,7 @@ void ler_instrutor_S(instrutor lista_instrutores_S[],
         cout << "--------------------\n";
 
         listar_cidades(lista_cidades_S, contA_cidade);
-        cout << " Digite o código da cidade: ";
+        cout << "\n Digite o código da cidade: ";
         cin >> instrutor_controle.codigo_cidade;
         cin.ignore();
 
@@ -212,7 +212,7 @@ void ler_instrutor_T(instrutor lista_instrutores_S[],
         cout << "--------------------";
 
         listar_cidades(lista_cidades_S, contA_cidade);
-        cout << " Digite o código da cidade: ";
+        cout << "\n Digite o código da cidade: ";
         cin >> instrutor_controle.codigo_cidade;
         cin.ignore();
 
