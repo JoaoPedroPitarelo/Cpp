@@ -28,6 +28,7 @@ void inicioPrograma() {
     int contS_cidade = 0, contT_cidade = 0, contA_cidade = 0;
     int contS_curso = 0, contT_curso = 0, contA_curso = 0;
     int contS_instrutor = 0, contT_instrutor = 0, contA_instrutor = 0; 
+    int contS_aluno = 0, contT_aluno = 0, contA_aluno = 0;
 
     while (true) {
 
@@ -46,6 +47,7 @@ void inicioPrograma() {
         cout << "OPÇÕES: [1] Adicionar cidade    [11] Buscar cidade\n";
         cout << "        [2] Adicionar Curso     [22] Listar cursos\n";
         cout << "        [3] Adicionar Instrutor [33] Listar instrutor\n";
+        cout << "        [4] Adicionar Aluno     [44] Excluir aluno\n";
         
 
         cout << "Escolha: ";
@@ -117,8 +119,29 @@ void inicioPrograma() {
             cin.ignore();
             getline(cin, pause);
             break;
-        }
 
-       
+        case 4:
+            system("clear");
+            if(contS_aluno == 0) {
+                ler_aluno_S(lista_alunos_S, contS_aluno, lista_cidades_S, contA_cidade);
+            }
+            else {
+                ler_aluno_T(lista_alunos_S, lista_alunos_T, contT_aluno, contS_aluno, lista_cidades_S, contA_cidade);
+            }
+
+            incluir_aluno(lista_alunos_S, lista_alunos_T, lista_alunos_A, contS_aluno, contT_aluno, contA_aluno);
+            arquivoA_passa_arquivoS_aluno(lista_alunos_A, lista_alunos_S, contS_aluno, contA_aluno);
+            break;
+
+        case 44:
+            listar_alunos(lista_alunos_S, contA_aluno, contT_aluno);
+
+            // buscar_aluno()
+
+            cout << "\n Pressione qualquer tecla para continuar: \n";
+            cin.ignore();
+            getline(cin, pause);
+            break;
+        }
     }
 }

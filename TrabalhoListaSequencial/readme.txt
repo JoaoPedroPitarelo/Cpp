@@ -23,11 +23,11 @@ Matrículas: código, código_aluno, código_turma, quantidade_aulas, valor_tota
 
 [x] 2.2) Quando o usuário digitar o código da cidade, o programa deverá buscar este código na tabela de Cidades e exibir o nome da cidade e UF.
 
-[] 3) Escreva uma função para permitir a inclusão de novos registros na tabela de Alunos.
+[x] 3) Escreva uma função para permitir a inclusão de novos registros na tabela de Alunos.
 
-[] 3.1) O programa deverá garantir que o código do aluno a ser inserido não existe na tabela de Alunos.
+[x] 3.1) O programa deverá garantir que o código do aluno a ser inserido não existe na tabela de Alunos.
  
-[] 3.2) Quando o usuário digitar o código da cidade, o programa deverá buscar este código na tabela de Cidades e exibir o nome da cidade e UF.
+[x] 3.2) Quando o usuário digitar o código da cidade, o programa deverá buscar este código na tabela de Cidades e exibir o nome da cidade e UF.
 
 [] 4) Escreva uma função para permitir a exclusão de registros na tabela de Alunos.
 

@@ -87,7 +87,7 @@ void ler_curso_S(curso lista_cursos_S[], int &contS) {
         // Verifição para ver se o usuário não está digitando um mesmo código já adicionado
         if (i != 0) {
 
-            for (int j = 0; j < T_CURSO; j++) {
+            for (int j = 0; j < contS; j++) {
 
                 if (curso_controle.codigo == lista_cursos_S[j].codigo) {
                     
@@ -152,8 +152,7 @@ void ler_curso_T(curso lista_cursos_S[],
         cin.ignore();
 
         // Verifição para ver se o usuário não está digitando um mesmo código já adicionado
-
-        for (int j = 0; j < T_CURSO; j++) {
+        for (int j = 0; j < (contT + contS); j++) {
 
             if (curso_controle.codigo == lista_cursos_S[j].codigo ||
                 curso_controle.codigo == lista_cursos_T[j].codigo) {

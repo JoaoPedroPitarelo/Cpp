@@ -104,7 +104,7 @@ void ler_instrutor_S(instrutor lista_instrutores_S[],
         // Verificação para ver se o usuário não está digitando um mesmo código já digitado
         if (i != 0) {
 
-            for (int j = 0; j < T_INSTRUTOR; j++) {
+            for (int j = 0; j < contS_instrutor; j++) {
 
                 if (instrutor_controle.codigo == lista_instrutores_S[j].codigo) {
 
@@ -190,7 +190,7 @@ void ler_instrutor_T(instrutor lista_instrutores_S[],
         cin.ignore();
 
         // Verificação para ver se o usuário não está digitando um código já digitado
-        for (int j = 0; j < T_INSTRUTOR; j++) {
+        for (int j = 0; j < (contT_instrutor + contS_instrutor); j++) {
             
             if (instrutor_controle.codigo == lista_instrutores_S[j].codigo ||
                 instrutor_controle.codigo == lista_instrutores_T[j].codigo) {

@@ -123,7 +123,7 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
         // Verifição para ver se o usuário não está digitando um mesmo código já adicionado
         if (i != 0) {
 
-            for (int j = 0; j < T_CIDADE; j++) {
+            for (int j = 0; j < contS; j++) {
 
                 if (cidade_controle.codigo == lista_cidades_S[j].codigo) {
                     
@@ -186,7 +186,7 @@ void ler_cidade_T(cidade lista_cidades_T[],
         cin.ignore();
    
         // Verifição para ver se o usuário não está digitando um mesmo código já adicionado
-        for (int j = 0; j < T_CIDADE; j++) {
+        for (int j = 0; j < (contT + contS); j++) {
             
             if (cidade_controle.codigo == lista_cidades_S[j].codigo ||
                 cidade_controle.codigo == lista_cidades_T[j].codigo) {
