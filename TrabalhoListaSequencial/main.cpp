@@ -69,7 +69,8 @@ void inicioPrograma() {
 
         case 11:
             system("clear");
-            listar_cidades(lista_cidades_S, contA_cidade);
+
+            buscar_cidade(lista_cidades_S, contA_cidade);
 
             cout << "\n Pressione qualquer tecla para continuar: \n";
             cin.ignore();
@@ -134,13 +135,17 @@ void inicioPrograma() {
             break;
 
         case 44:
-            listar_alunos(lista_alunos_S, contA_aluno, contT_aluno);
+            system("clear");
 
-            // buscar_aluno()
+            excluir_aluno(lista_alunos_S, lista_alunos_A, contA_aluno);
+            arquivoA_passa_arquivoS_aluno(lista_alunos_A, lista_alunos_S, contS_aluno, contA_aluno);
+
+            listar_alunos(lista_alunos_S, contA_aluno);
 
             cout << "\n Pressione qualquer tecla para continuar: \n";
             cin.ignore();
             getline(cin, pause);
+
             break;
         }
     }

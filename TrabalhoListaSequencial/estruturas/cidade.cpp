@@ -70,22 +70,34 @@ void listar_cidades(cidade lista_cidades[], int contA_cidade) {
 }
 
 // Buscar cidade
-int buscar_cidade(cidade lista_cidades[], int cidade_procurada, int contA) {
+void buscar_cidade(cidade lista_cidades[], int contA) {
 
     int inicio = 0;
     int fim = contA;
     int meio = ((inicio + fim) / 2);
+    int cidade_procurada;
+    bool cidade_encontrada = false;
+
+    cout << "Digite o código da cidade: ";
+    cin >> cidade_procurada;
+
 
     for (int i = 0; i < contA; i++) {
     
         // Encotrou a cidade
         if (cidade_procurada == lista_cidades[i].codigo) {
-            return i;
+            cout << "\nCidade encontrada! \n";
+
+            cout << "\nCódigo: " << lista_cidades[i].codigo;
+            cout << "\n Nome: " << lista_cidades[i].nome;
+            cout << "\n  Estado: " << lista_cidades[i].estado << "\n";
+            
+            cidade_encontrada = true;
         }
 
-        // Caso não exista o código da pessoa
+        // Caso não exista o código da cidade
         if (inicio == fim) {
-            return -1;
+            cidade_encontrada = false;
         }
 
         if (cidade_procurada > lista_cidades[meio].codigo) {
@@ -97,11 +109,14 @@ int buscar_cidade(cidade lista_cidades[], int cidade_procurada, int contA) {
 
         if (cidade_procurada < lista_cidades[meio].codigo) {
             
-            fim = meio - 1;
+            fim = meio -1;
             meio = ((inicio + fim) / 2);
             continue;
         }
     }
+
+    if (!cidade_encontrada) 
+        cout << "\nCidade NÃO encontrada!\n";
 }
 
 // Primeira leitura

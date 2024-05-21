@@ -9,7 +9,6 @@ struct aluno {
 };
 
 // Funções de aluno
-
 void incluir_aluno(aluno lista_alunos_S[],
                    aluno lista_alunos_T[],
                    aluno lista_alunos_A[],
@@ -51,8 +50,88 @@ void incluir_aluno(aluno lista_alunos_S[],
     contA = k;
 }
 
+void buscar_aluno(aluno lista_alunos[], int contA, int aluno_procurado, int &codigo_aluno_encontrado) {
 
-void listar_alunos(aluno lista_alunos[], int contA_aluno, int contT) {
+    int inicio = 0;
+    int fim = contA;
+    int meio = ((inicio + fim) / 2);
+    bool aluno_encontrada = false;
+
+    for (int i = 0; i < contA; i++) {
+        
+        //encontrou o aluno
+        if (aluno_procurado == lista_alunos[i].codigo) {
+            codigo_aluno_encontrado = aluno_procurado;
+            aluno_encontrada = true;
+        }
+
+        // Caso não exista o código do aluno
+        if (inicio == fim) {
+            codigo_aluno_encontrado = -1;
+            aluno_encontrada = false;
+        }
+
+        if (aluno_procurado > lista_alunos[meio].codigo) {
+
+            inicio = meio + 1;
+            meio = ((inicio + fim) / 2);
+            continue;
+        }
+
+        if (aluno_procurado < lista_alunos[meio].codigo) {
+
+            fim = meio -1; 
+            meio = ((inicio + fim) / 2);
+            continue;
+        }
+    }
+
+    if (!aluno_procurado) {
+        codigo_aluno_encontrado = -1;
+    }
+}
+
+
+
+void excluir_aluno(aluno lista_alunos_S[], aluno lista_aluno_A[], int contA) {
+    
+    int codigo_aluno_procurado = 0;
+    int codigo_aluno_encontrado = 0;
+
+    cout << "\nDigite o código do aluno a ser excluído: ";
+    cin >> codigo_aluno_procurado;
+    
+    buscar_aluno(lista_alunos_S, contA, codigo_aluno_procurado, codigo_aluno_encontrado);
+
+    int i = 0; // inicio;
+    int j = 0; // transição
+    int k = 0; // final
+
+    for (; i < contA; i++) {
+        
+        if (codigo_aluno_encontrado == -1) break;
+
+        if (lista_alunos_S[i].codigo == codigo_aluno_encontrado) {
+
+            j++;
+            continue;
+        }
+
+        lista_aluno_A[k] = lista_alunos_S[i];
+        k++;
+    }
+
+    if (k != 0) {
+        contA = k;
+        cout << "\n Aluno excluído com sucesso! \n";
+    } 
+    else {
+        cout << "\n Código não encontrado! \n";
+    }
+}
+
+
+void listar_alunos(aluno lista_alunos[], int contA_aluno) {
 
     if (contA_aluno == 0) {
         cout << "\n NÃO há alunos adicionados!\n";
