@@ -61,8 +61,10 @@ void buscar_aluno(aluno lista_alunos[], int contA, int aluno_procurado, int &cod
         
         //encontrou o aluno
         if (aluno_procurado == lista_alunos[i].codigo) {
+            
             codigo_aluno_encontrado = aluno_procurado;
             aluno_encontrada = true;
+            break;
         }
 
         // Caso não exista o código do aluno
@@ -91,9 +93,22 @@ void buscar_aluno(aluno lista_alunos[], int contA, int aluno_procurado, int &cod
     }
 }
 
+void arquivoA_passa_arquivoS_aluno(aluno lista_alunos_A[],
+                                   aluno lista_alunos_S[],
+                                   int &contS,
+                                   int contA) {
+    
+    for (int i = 0; i < contA; i++) {
+        lista_alunos_S[i] = lista_alunos_A[i];
+    }
 
+    contS = contA;
+}
 
-void excluir_aluno(aluno lista_alunos_S[], aluno lista_aluno_A[], int contA) {
+void excluir_aluno(aluno lista_alunos_S[],
+                   aluno lista_alunos_A[],
+                    int &contA,
+                    int &contS) {
     
     int codigo_aluno_procurado = 0;
     int codigo_aluno_encontrado = 0;
@@ -103,26 +118,24 @@ void excluir_aluno(aluno lista_alunos_S[], aluno lista_aluno_A[], int contA) {
     
     buscar_aluno(lista_alunos_S, contA, codigo_aluno_procurado, codigo_aluno_encontrado);
 
-    int i = 0; // inicio;
-    int j = 0; // transição
     int k = 0; // final
 
-    for (; i < contA; i++) {
+    for (int i = 0; k < contA; i++) {
         
-        if (codigo_aluno_encontrado == -1) break;
+        if (codigo_aluno_encontrado <= 0) break;
 
-        if (lista_alunos_S[i].codigo == codigo_aluno_encontrado) {
-
-            j++;
-            continue;
-        }
-
-        lista_aluno_A[k] = lista_alunos_S[i];
+        if (lista_alunos_S[i].codigo == codigo_aluno_encontrado) continue;
+        
+        lista_alunos_A[k] = lista_alunos_S[i];
         k++;
     }
 
-    if (k != 0) {
-        contA = k;
+    if (k > 0) {
+        contA = k -1;// 'k -1' por conta de '1 <= contA', fazendo com que k fique igual a valor anterior.
+        contS = contA;
+
+        arquivoA_passa_arquivoS_aluno(lista_alunos_A, lista_alunos_S, contS, contA);
+
         cout << "\n Aluno excluído com sucesso! \n";
     } 
     else {
@@ -175,7 +188,7 @@ void ler_aluno_S(aluno lista_alunos_S[],
         bool codigo_duplicado = false;
         bool cidade_valida = false;
 
-        cout << "---- Ler Aluno ----\n";
+        cout << "---- Ler Aluno primeira----\n";
 
         cout << "Digite o código do aluno: ";
 
@@ -321,16 +334,4 @@ void ler_aluno_T(aluno lista_alunos_S[],
 
         if (controle == 0) break;
     }
-}
-
-void arquivoA_passa_arquivoS_aluno(aluno lista_alunos_A[],
-                                   aluno lista_alunos_S[],
-                                   int &contS,
-                                   int contA) {
-    
-    for (int i = 0; i < contA; i++) {
-        lista_alunos_S[i] = lista_alunos_A[i];
-    }
-
-    contS = contA;
 }

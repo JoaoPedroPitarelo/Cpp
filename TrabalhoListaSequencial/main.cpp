@@ -137,9 +137,7 @@ void inicioPrograma() {
         case 44:
             system("clear");
 
-            excluir_aluno(lista_alunos_S, lista_alunos_A, contA_aluno);
-            arquivoA_passa_arquivoS_aluno(lista_alunos_A, lista_alunos_S, contS_aluno, contA_aluno);
-
+            excluir_aluno(lista_alunos_S, lista_alunos_A, contA_aluno, contS_aluno);
             listar_alunos(lista_alunos_S, contA_aluno);
 
             cout << "\n Pressione qualquer tecla para continuar: \n";
