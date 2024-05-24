@@ -144,12 +144,11 @@ void ler_instrutor_S(instrutor lista_instrutores_S[],
         }
        
         lista_instrutores_S[contS_instrutor] = instrutor_controle;
+        contS_instrutor++;
+        i++;
 
         cout << "\nDeseja adicionar mais um instrutor: (0 = NAO) (1 = SIM)\n";
         cin >> controle;
-
-        contS_instrutor++;
-        i++;
         
         if (controle == 0) break;
     }

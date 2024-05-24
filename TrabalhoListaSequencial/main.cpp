@@ -29,6 +29,7 @@ void inicioPrograma() {
     int contS_curso = 0, contT_curso = 0, contA_curso = 0;
     int contS_instrutor = 0, contT_instrutor = 0, contA_instrutor = 0; 
     int contS_aluno = 0, contT_aluno = 0, contA_aluno = 0;
+    int contS_turma = 0, contT_turma = 0, contA_turma = 0;
 
     while (true) {
 
@@ -44,16 +45,17 @@ void inicioPrograma() {
 
         // "Interface"
         system("clear");
-        cout << "OPÇÕES: [1] Adicionar cidade    [11] Buscar cidade\n";
+        cout << "OPÇÕES: [1] Adicionar Cidade    [11] Buscar cidade\n";
         cout << "        [2] Adicionar Curso     [22] Listar cursos\n";
-        cout << "        [3] Adicionar Instrutor [33] Listar instrutor\n";
+        cout << "        [3] Adicionar Instrutor [33] Listar instrutores\n";
         cout << "        [4] Adicionar Aluno     [44] Excluir aluno\n";
+        cout << "        [5] Adicionar Turma     [55] Listar turmas\n";
         
-
-        cout << "Escolha: ";
+        cout << "\nEscolha: ";
         cin >> opcao;
 
         switch (opcao) {
+        // Cidade -------------------
         case 1:
             system("clear");
             if (contS_cidade == 0) {
@@ -77,6 +79,7 @@ void inicioPrograma() {
             getline(cin, pause);
             break;
 
+        // Curso -------------------
         case 2:
             system("clear");
             if (contS_curso == 0) {
@@ -98,7 +101,8 @@ void inicioPrograma() {
             cin.ignore();
             getline(cin, pause);
             break;
-        
+
+        // Instrutor -------------------
         case 3:
             system("clear");
             if (contS_instrutor == 0) {
@@ -121,6 +125,7 @@ void inicioPrograma() {
             getline(cin, pause);
             break;
 
+        // Aluno -------------------
         case 4:
             system("clear");
             if(contS_aluno == 0) {
@@ -144,6 +149,29 @@ void inicioPrograma() {
             cin.ignore();
             getline(cin, pause);
 
+            break;
+
+        // Turma -------------------
+        case 5:
+            //system("clear");
+            if(contS_turma == 0) {
+                ler_turma_S(lista_turmas_S, lista_cursos_S,lista_instrutores_S, contS_turma, contA_curso, contA_instrutor);
+            }
+            else {
+                ler_turma_T(lista_turmas_S, lista_turmas_T, lista_cursos_S, lista_instrutores_S, contT_turma, contS_turma, contA_curso, contA_instrutor);
+            }
+
+            incluir_turma(lista_turmas_S, lista_turmas_T, lista_turmas_A, contS_turma, contT_turma, contA_turma);
+            arquivoA_passa_arquivoS_turma(lista_turmas_A, lista_turmas_S, contS_turma, contA_turma);
+
+            break;
+
+        case 55: 
+            system("clear");
+            listar_turmas(lista_turmas_S, contA_turma);
+            cout << "\n Pressione qualquer tecla para continuar: \n";
+            cin.ignore();
+            getline(cin, pause);
             break;
         }
     }

@@ -62,8 +62,8 @@ void listar_cursos(curso lista_cursos[], int contA_curso) {
 
         for (int i = 0; i < contA_curso; i++) {
             cout << "\nCódigo: " << lista_cursos[i].codigo;
-            cout << "\n Descrição: " <<  lista_cursos[i].descricao;
-            cout << "\n  Valor p/aula: "<<lista_cursos[i].valor_por_aula << "\n"; 
+            cout << "\n Descrição: " << lista_cursos[i].descricao;
+            cout << "\n  Valor p/aula: R$"<< lista_cursos[i].valor_por_aula << "\n"; 
         }
     }
 }

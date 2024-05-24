@@ -42,6 +42,7 @@ void incluir_aluno(aluno lista_alunos_S[],
     }
 
     while (j < contT) {
+
         lista_alunos_A[k] = lista_alunos_T[j];
         j++;
         k++;
@@ -142,7 +143,6 @@ void excluir_aluno(aluno lista_alunos_S[],
         cout << "\n Código não encontrado! \n";
     }
 }
-
 
 void listar_alunos(aluno lista_alunos[], int contA_aluno) {
 
@@ -324,13 +324,12 @@ void ler_aluno_T(aluno lista_alunos_S[],
         }
 
         lista_alunos_T[i] = aluno_controle;
-
-        cout << "\nDeseja adicionar mais um aluno: (0 = NAO) (1 = SIM)\n";
-        cin >> controle;
-
         contS_aluno++;
         contT_aluno++;
         i++;
+
+        cout << "\nDeseja adicionar mais um aluno: (0 = NAO) (1 = SIM)\n";
+        cin >> controle;
 
         if (controle == 0) break;
     }
