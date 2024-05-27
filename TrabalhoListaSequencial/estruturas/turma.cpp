@@ -84,26 +84,26 @@ void ler_turma_S(turma lista_turmas_S[],
     for (int i = 0; i < T_TURMA;) {
 
         // Caso não haja cursos adicionados
-        if (!contA_curso) {
+        if (!contA_curso || !contA_instrutor) {
 
             string pause = " ";
-            cout << "\n É necessário ADICIONAR cursos PRIMEIRO!";
+            cout << "\n É necessário ADICIONAR CURSOS E INSTRUTORES PRIMEIRO!";
             cout << "\n Pressione qualquer tecla para continuar: \n";
             cin.ignore();
             getline(cin, pause);
-            break; 
+            break;  
         }
 
-        // Caso não haja cursos adicionados
-        if (!contA_instrutor) {
+        // // Caso não haja cursos adicionados
+        // if (!contA_instrutor) {
 
-            string pause = " ";
-            cout << "\n É necessário ADICIONAR instrutores PRIMEIRO!";
-            cout << "\n Pressione qualquer tecla para continuar: \n";
-            cin.ignore();
-            getline(cin, pause);
-            break; 
-        }
+        //     string pause = " ";
+        //     cout << "\n É necessário ADICIONAR instrutores PRIMEIRO!";
+        //     cout << "\n Pressione qualquer tecla para continuar: \n";
+        //     cin.ignore();
+        //     getline(cin, pause);
+        //     break; 
+        // }
 
         turma turma_controle;
         bool codigo_duplicado = false;
@@ -137,7 +137,9 @@ void ler_turma_S(turma lista_turmas_S[],
 
         // Verificar se o código da curso digitado é valido
         for (int j = 0; j < contA_curso; j++) {
+
             if (turma_controle.codigo_curso == lista_cursos_S[j].codigo) {
+                
                 curso_valido = true;
                 break;
             }

@@ -30,6 +30,7 @@ void inicioPrograma() {
     int contS_instrutor = 0, contT_instrutor = 0, contA_instrutor = 0; 
     int contS_aluno = 0, contT_aluno = 0, contA_aluno = 0;
     int contS_turma = 0, contT_turma = 0, contA_turma = 0;
+    int contS_matricula = 0, contT_matricula = 0, contA_matricula;
 
     while (true) {
 
@@ -50,6 +51,7 @@ void inicioPrograma() {
         cout << "        [3] Adicionar Instrutor [33] Listar instrutores\n";
         cout << "        [4] Adicionar Aluno     [44] Excluir aluno\n";
         cout << "        [5] Adicionar Turma     [55] Listar turmas\n";
+        cout << "        [6] Adicionar Matricula [66] Listar matriculas\n";
         
         cout << "\nEscolha: ";
         cin >> opcao;
@@ -153,7 +155,7 @@ void inicioPrograma() {
 
         // Turma -------------------
         case 5:
-            //system("clear");
+            system("clear");
             if(contS_turma == 0) {
                 ler_turma_S(lista_turmas_S, lista_cursos_S,lista_instrutores_S, contS_turma, contA_curso, contA_instrutor);
             }
@@ -168,7 +170,27 @@ void inicioPrograma() {
 
         case 55: 
             system("clear");
+
             listar_turmas(lista_turmas_S, contA_turma);
+            cout << "\n Pressione qualquer tecla para continuar: \n";
+            cin.ignore();
+            getline(cin, pause);
+            break;
+
+        // Matricula --------------------
+        case 6:
+            system("clear");
+            if (contS_matricula == 0) {
+                ler_matricula_S(lista_matriculas_S, lista_alunos_S, lista_turmas_S, lista_cursos_S, lista_instrutores_S, contS_matricula, contA_aluno, contA_turma, contA_curso, contA_instrutor);
+            }
+            else {
+                //ler_matricula_T(lista_matriculas_S, lista_matriculas_T, lista_alunos_S, lista_turmas_S, lista_cursos_S, lista_instrutores_S, contT_matricula, contS_matricula, contA_aluno, contA_turma, contA_curso, contA_instrutor);
+            }
+        
+        case 66:
+            system("clear");
+
+            //listar_matriculas(lista_matriculas_S, contA_matricula);
             cout << "\n Pressione qualquer tecla para continuar: \n";
             cin.ignore();
             getline(cin, pause);
