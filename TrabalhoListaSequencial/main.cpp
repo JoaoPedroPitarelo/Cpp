@@ -184,13 +184,17 @@ void inicioPrograma() {
                 ler_matricula_S(lista_matriculas_S, lista_alunos_S, lista_turmas_S, lista_cursos_S, lista_instrutores_S, contS_matricula, contA_aluno, contA_turma, contA_curso, contA_instrutor);
             }
             else {
-                //ler_matricula_T(lista_matriculas_S, lista_matriculas_T, lista_alunos_S, lista_turmas_S, lista_cursos_S, lista_instrutores_S, contT_matricula, contS_matricula, contA_aluno, contA_turma, contA_curso, contA_instrutor);
+                ler_matricula_T(lista_matriculas_S, lista_matriculas_T, lista_alunos_S, lista_turmas_S, lista_cursos_S, lista_instrutores_S, contT_matricula, contS_matricula, contA_aluno, contA_turma, contA_curso, contA_instrutor);
             }
-        
+
+            incluir_matricula(lista_matriculas_S, lista_matriculas_T, lista_matriculas_A, contS_matricula, contT_matricula, contA_matricula);
+            arquivoA_passa_arquivoS_matricula(lista_matriculas_A, lista_matriculas_S, contS_matricula, contA_matricula);
+
+            break;
         case 66:
             system("clear");
 
-            //listar_matriculas(lista_matriculas_S, contA_matricula);
+            listar_matriculas(lista_matriculas_S, contA_matricula);
             cout << "\n Pressione qualquer tecla para continuar: \n";
             cin.ignore();
             getline(cin, pause);

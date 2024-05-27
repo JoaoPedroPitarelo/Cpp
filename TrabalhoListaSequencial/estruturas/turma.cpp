@@ -177,6 +177,7 @@ void ler_turma_S(turma lista_turmas_S[],
         i++;
 
         cout << "Deseja adicionar mais uma turma? (0 = NÃO) (1 = SIM)\n";
+        cin >> controle;
 
         if (controle == 0) break;
     }
@@ -194,7 +195,6 @@ void ler_turma_T(turma lista_turmas_S[],
     int i = 0;
     contT_turma = 0;
     int controle = 0;
-    bool cidade_valida = false;
 
     while (i < T_TURMA) {
 
@@ -212,7 +212,6 @@ void ler_turma_T(turma lista_turmas_S[],
         bool codigo_duplicado = false;
         bool curso_valido = false;
         bool instrutor_valido = false;
-
 
         cout << "---- Ler Turma -----\n";
 
