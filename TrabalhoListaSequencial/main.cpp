@@ -46,12 +46,12 @@ void inicioPrograma() {
 
         // "Interface"
         system("clear");
-        cout << "OPÇÕES: [1] Adicionar Cidade    [11] Buscar cidade\n";
+        cout << "OPÇÕES: [1] Adicionar Cidade    [12] Buscar cidade\n";
         cout << "        [2] Adicionar Curso     [22] Listar cursos\n";
-        cout << "        [3] Adicionar Instrutor [33] Listar instrutores\n";
-        cout << "        [4] Adicionar Aluno     [44] Excluir aluno\n";
-        cout << "        [5] Adicionar Turma     [55] Listar turmas\n";
-        cout << "        [6] Adicionar Matricula [66] Listar matriculas\n";
+        cout << "        [3] Adicionar Instrutor [32] Listar instrutores\n";
+        cout << "        [4] Adicionar Aluno     [42] Excluir aluno\n";
+        cout << "        [5] Adicionar Turma     [52] Listar todas as turmas [53] Buscar turma\n";
+        cout << "        [6] Adicionar Matricula [62] Listar matriculas\n";
         
         cout << "\nEscolha: ";
         cin >> opcao;
@@ -71,7 +71,7 @@ void inicioPrograma() {
             arquivoA_passa_arquivoS_cidade(lista_cidades_A, lista_cidades_S, contS_cidade, contA_cidade);
             break;
 
-        case 11:
+        case 12:
             system("clear");
 
             buscar_cidade(lista_cidades_S, contA_cidade);
@@ -118,7 +118,7 @@ void inicioPrograma() {
             arquivoA_passa_arquivoS_instrutor(lista_instrutores_A, lista_instrutores_S, contS_instrutor, contA_instrutor);
             break;
 
-        case 33:
+        case 32:
             system("clear");
             listar_instrutores(lista_instrutores_S, contA_instrutor);
 
@@ -141,7 +141,7 @@ void inicioPrograma() {
             arquivoA_passa_arquivoS_aluno(lista_alunos_A, lista_alunos_S, contS_aluno, contA_aluno);
             break;
 
-        case 44:
+        case 42:
             system("clear");
 
             excluir_aluno(lista_alunos_S, lista_alunos_A, contA_aluno, contS_aluno);
@@ -168,7 +168,7 @@ void inicioPrograma() {
 
             break;
 
-        case 55: 
+        case 52: 
             system("clear");
 
             listar_turmas(lista_turmas_S, contA_turma);
@@ -177,6 +177,16 @@ void inicioPrograma() {
             getline(cin, pause);
             break;
 
+        case 53:
+            system("clear");
+
+            buscar_turma(lista_turmas_S, lista_cursos_S, lista_instrutores_S, lista_cidades_S, contA_turma, contA_curso, contA_instrutor, contA_cidade);
+
+            cout << "\n\n Pressione qualquer tecla para continuar: \n";
+            cin.ignore();
+            getline(cin, pause);
+
+            break;
         // Matricula --------------------
         case 6:
             system("clear");
@@ -191,10 +201,10 @@ void inicioPrograma() {
             arquivoA_passa_arquivoS_matricula(lista_matriculas_A, lista_matriculas_S, contS_matricula, contA_matricula);
 
             break;
-        case 66:
+        case 62:
             system("clear");
 
-            listar_matriculas(lista_matriculas_S, contA_matricula);
+            listar_matriculas(lista_matriculas_S, lista_alunos_S, lista_cursos_S, lista_instrutores_S, lista_turmas_S, contA_matricula, contA_aluno, contA_curso, contA_instrutor, contA_turma);
             cout << "\n Pressione qualquer tecla para continuar: \n";
             cin.ignore();
             getline(cin, pause);

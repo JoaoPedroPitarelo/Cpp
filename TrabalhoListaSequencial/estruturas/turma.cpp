@@ -52,6 +52,76 @@ void incluir_turma(turma lista_turmas_S[],
     contA = k;
 }
 
+// Funções interna
+int validate_curso_turma(curso lista_cursos_S[], int contA, int codigo_procurado) {
+
+    int inicio = 0;
+    int fim = contA;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (lista_cursos_S[meio].codigo == codigo_procurado) {
+            return meio;
+        }
+        
+        if (lista_cursos_S[meio].codigo < codigo_procurado) {
+            inicio = meio + 1;
+        }
+        else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+
+int validate_instrutor_turma(instrutor lista_instrutores_S[], int contA, int codigo_procurado) {
+
+    int inicio = 0;
+    int fim = contA;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (lista_instrutores_S[meio].codigo == codigo_procurado) {
+            return meio;
+        }
+        
+        if (lista_instrutores_S[meio].codigo < codigo_procurado) {
+            inicio = meio + 1;
+        }
+        else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+
+int validate_cidade_turma(cidade lista_cidades_S[], int contA, int codigo_procurado) {
+
+    int inicio = 0;
+    int fim = contA;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (lista_cidades_S[meio].codigo == codigo_procurado) {
+            return meio;
+        }
+        
+        if (lista_cidades_S[meio].codigo < codigo_procurado) {
+            inicio = meio + 1;
+        }
+        else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+
 void listar_turmas(turma lista_turmas_S[], int contA_turma) {
 
     if (contA_turma == 0) {
@@ -68,6 +138,68 @@ void listar_turmas(turma lista_turmas_S[], int contA_turma) {
             cout << "\n  Código do instrutor: " << lista_turmas_S[i].codigo_instrutor;
             cout << "\n   Total de participantes: " << lista_turmas_S[i].total_participantes;
             cout << "\n    Quantidade máxima de participantes: " << lista_turmas_S[i].qtd_max_participantes;
+        }
+    }
+}
+
+void buscar_turma(turma lista_turmas_S[],
+                  curso lista_cursos_S[],
+                  instrutor lista_instrutores_S[],
+                  cidade lista_cidades_S[],
+                  int contA_turma,
+                  int contA_curso,
+                  int contA_instrutor,
+                  int contA_cidade) {
+
+    if (contA_turma < 1) {
+
+        cout << "\n NÃO há turmas adicionadas!\n";
+    }
+    else {
+
+        int codigo_procurado;
+        int codigo_resultado = -1;
+
+        cout << "\n Digite o código da turma: ";
+        cin >> codigo_procurado;
+
+        // Buscar binária
+        int inicio = 0;
+        int fim = contA_turma;
+
+        while (inicio <= fim) {
+
+            int meio = (inicio + fim) / 2;
+
+            if (lista_turmas_S[meio].codigo == codigo_procurado) {
+                codigo_resultado = meio;
+            }
+            
+            if (lista_turmas_S[meio].codigo < codigo_procurado) {
+                inicio = meio + 1;
+            }
+            else {
+                fim = meio - 1;
+            }
+        }
+
+        if (codigo_resultado != -1) {
+            
+            // Usando indíce de turma para achar o indice de curso, instrutor e cidade
+            int indice_curso     = validate_curso_turma(lista_cursos_S, contA_curso, lista_turmas_S[codigo_resultado].codigo_curso);
+            int indice_instrutor = validate_instrutor_turma(lista_instrutores_S, contA_instrutor, lista_turmas_S[codigo_resultado].codigo_instrutor);
+            int indice_cidade    = validate_cidade_turma(lista_cidades_S, contA_cidade, lista_instrutores_S[indice_instrutor].codigo_cidade);
+
+            cout << "\n Turma encontrada!\n";
+
+            cout << "\nNome do curso         : " << lista_cursos_S[indice_curso].descricao;
+            cout << "\nNome do instrutor     : " << lista_instrutores_S[indice_instrutor].nome;
+            cout << "\nCidade do instrutor   : " << lista_cidades_S[indice_cidade].nome;
+            cout << "\nTotal de participantes: " << lista_turmas_S[codigo_resultado].total_participantes;
+        }
+        else {
+
+            cout << "\n Turma não encontrada!!!\n";
         }
     }
 }

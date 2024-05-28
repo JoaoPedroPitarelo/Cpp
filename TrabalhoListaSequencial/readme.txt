@@ -29,7 +29,7 @@ Matrículas: código, código_aluno, código_turma, quantidade_aulas, valor_tota
  
 [x] 3.2) Quando o usuário digitar o código da cidade, o programa deverá buscar este código na tabela de Cidades e exibir o nome da cidade e UF.
 
-[x-] 4) Escreva uma função para permitir a exclusão de registros na tabela de Alunos.
+[x] 4) Escreva uma função para permitir a exclusão de registros na tabela de Alunos.
 
 [x] 5) Escreva uma função para permitir a inclusão de novos registros na tabela de Turmas.
  
@@ -51,9 +51,9 @@ Matrículas: código, código_aluno, código_turma, quantidade_aulas, valor_tota
 
 [x] 6.5) O programa deverá calcular e exibir o valor total a ser pago pelo aluno e gravar essa informação em valor_total na tabela Matrículas.
 
-[-] 7) Escreva uma função para permitir ao usuário consultar os dados de determinada turma.
+[x] 7) Escreva uma função para permitir ao usuário consultar os dados de determinada turma.
  
-[-] 7.1) Para cada turma consultada, exibir: nome do curso, nome do instrutor, nome da cidade do instrutor, total de participantes.
+[x] 7.1) Para cada turma consultada, exibir: nome do curso, nome do instrutor, nome da cidade do instrutor, total de participantes.
  
 [-] 8) Escreva uma função para exibir todos as Turmas que estejam completas (total_participantes = quant_max_participantes). 
  

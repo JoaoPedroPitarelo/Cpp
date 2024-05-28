@@ -45,19 +45,21 @@ void incluir_matricula(matricula lista_matriculas_S[],
         lista_matriculas_A[k] = lista_matriculas_T[j];
         j++;
         k++;
-    }
+    }    
 
     contA = k;
+    
 }
 
 // Funções "internas"
-int validate_turma(turma lista_turmas_S[], int contA, int codigo_procurado) {
 
-    // Buscando o indice em relação ao código
+// Buscar indice dentro da lista de acordo com o código
+int validate_turma_matricula(turma lista_turmas_S[], int contA, int codigo_procurado) {
+
     int inicio = 0;
     int fim = contA;
 
-    while (inicio < fim) {
+    while (inicio <= fim) {
         int meio = (inicio + fim) / 2;
 
         if (lista_turmas_S[meio].codigo == codigo_procurado) {
@@ -74,6 +76,99 @@ int validate_turma(turma lista_turmas_S[], int contA, int codigo_procurado) {
 
     return -1;
 }
+
+int validate_matricula(matricula lista_matricula_S[], int contA, int codigo_procurado) {
+
+    int inicio = 0;
+    int fim = contA;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (lista_matricula_S[meio].codigo == codigo_procurado) {
+            return meio;
+        }
+        
+        if (lista_matricula_S[meio].codigo < codigo_procurado) {
+            inicio = meio + 1;
+        }
+        else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+
+int validate_curso_matricula(curso lista_cursos_S[], int contA, int codigo_procurado) {
+
+    int inicio = 0;
+    int fim = contA;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (lista_cursos_S[meio].codigo == codigo_procurado) {
+            return meio;
+        }
+        
+        if (lista_cursos_S[meio].codigo < codigo_procurado) {
+            inicio = meio + 1;
+        }
+        else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+
+int validate_instrutor_matricula(instrutor lista_instrutores_S[], int contA, int codigo_procurado) {
+
+    int inicio = 0;
+    int fim = contA;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (lista_instrutores_S[meio].codigo == codigo_procurado) {
+            return meio;
+        }
+        
+        if (lista_instrutores_S[meio].codigo < codigo_procurado) {
+            inicio = meio + 1;
+        }
+        else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+
+int validate_aluno_matricula(aluno lista_alunos_S[], int contA, int codigo_procurado) {
+
+    int inicio = 0;
+    int fim = contA;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (lista_alunos_S[meio].codigo == codigo_procurado) {
+            return meio;
+        }
+        
+        if (lista_alunos_S[meio].codigo < codigo_procurado) {
+            inicio = meio + 1;
+        }
+        else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+
 
 void ler_matricula_S(matricula lista_matriculas_S[],
                      aluno lista_alunos_S[],
@@ -156,15 +251,6 @@ void ler_matricula_S(matricula lista_matriculas_S[],
             continue;
         }
 
-        // Listar turma, descrição, instrutor e valor por aula - fazer uma função para isso depois
-        for (int i = 0; i < contA_turma; i++) {
-
-            cout << "\n\nTurma: " << lista_turmas_S[i].codigo;
-            cout << "\nDescrição do curso: " << lista_cursos_S[lista_turmas_S[i+1].codigo_curso].descricao;
-            cout << "\nInstrutor: " << lista_instrutores_S[lista_turmas_S[i+1].codigo_instrutor].nome;
-            cout << "\nValor por aula: R$" << lista_cursos_S[lista_turmas_S[i+1].codigo_curso].valor_por_aula;
-        }
-
         cout << "\n Digite o código da turma: ";
         cin >> matricula_controle.codigo_turma;
 
@@ -184,10 +270,18 @@ void ler_matricula_S(matricula lista_matriculas_S[],
             continue;
         }
 
-        // Verificar se a quantidade máxima não será ultrapassada
-        int indice = validate_turma(lista_turmas_S, contA_turma, matricula_controle.codigo_turma);
+        // Usando o indice de turma para achar os indíces de curso e de instrutor
+        int indice_turma     = validate_turma_matricula(lista_turmas_S, contA_turma, matricula_controle.codigo_turma);
+        int indice_curso     = validate_curso_matricula(lista_cursos_S, contA_curso, lista_turmas_S[indice_turma].codigo_curso);
+        int indice_instrutor = validate_instrutor_matricula(lista_instrutores_S, contA_instrutor, lista_turmas_S[indice_turma].codigo_instrutor);
 
-        if (lista_turmas_S[indice].total_participantes == lista_turmas_S[indice].qtd_max_participantes) {
+        // Listar turma, descrição, instrutor e valor por aula - fazer uma função para isso depois
+        cout << "\n\nTurma: " << lista_turmas_S[indice_turma].codigo;
+        cout << "\nDescrição do curso: " << lista_cursos_S[indice_curso].descricao;
+        cout << "\nInstrutor: " << lista_instrutores_S[indice_instrutor].nome;
+        cout << "\nValor por aula: R$" << lista_cursos_S[indice_curso].valor_por_aula;
+    
+        if (lista_turmas_S[indice_turma].total_participantes == lista_turmas_S[indice_turma].qtd_max_participantes) {
 
             string pause = "";
             int opcao;
@@ -204,14 +298,10 @@ void ler_matricula_S(matricula lista_matriculas_S[],
         cin >> matricula_controle.qtd_aula;
 
         cout << "\nTotal a ser pago ";
-        cout << "R$: " << matricula_controle.qtd_aula * lista_cursos_S[lista_turmas_S[matricula_controle.codigo_turma].codigo_curso].valor_por_aula << "\n";
+        cout << "R$: " << matricula_controle.qtd_aula * lista_cursos_S[indice_curso].valor_por_aula << "\n";
 
-        matricula_controle.valor_total = matricula_controle.qtd_aula * lista_cursos_S[lista_turmas_S[matricula_controle.codigo_turma].codigo_curso].valor_por_aula;
-       
-        indice = validate_turma(lista_turmas_S, contA_turma, matricula_controle.codigo_turma);
-
-        lista_turmas_S[indice].total_participantes++;
-
+        matricula_controle.valor_total = matricula_controle.qtd_aula * lista_cursos_S[indice_curso].valor_por_aula;
+        lista_turmas_S[indice_turma].total_participantes++;
         lista_matriculas_S[contS_matricula] = matricula_controle;
         contS_matricula++;
         i++;
@@ -306,15 +396,6 @@ void ler_matricula_T(matricula lista_matriculas_S[],
             continue;
         }
 
-        // Listar turma, descrição, instrutor e valor por aula - fazer uma função para isso depois
-        for (int i = 0; i < contA_turma; i++) {
-
-            cout << "\n\nTurma: " << lista_turmas_S[i].codigo;
-            cout << "\nDescrição do curso: " << lista_cursos_S[lista_turmas_S[i+1].codigo_curso].descricao;
-            cout << "\nInstrutor: " << lista_instrutores_S[lista_turmas_S[i+1].codigo_instrutor].nome;
-            cout << "\nValor por aula: R$" << lista_cursos_S[lista_turmas_S[i+1].codigo_curso].valor_por_aula;
-        }
-
         cout << "\n Digite o código da turma: ";
         cin >> matricula_controle.codigo_turma;
 
@@ -334,9 +415,18 @@ void ler_matricula_T(matricula lista_matriculas_S[],
             continue;
         }
 
-        // Verificar se a quantidade máxima não será ultrapassada
-        int indice = validate_turma(lista_turmas_S, contA_turma, matricula_controle.codigo_turma);
-        if (lista_turmas_S[indice].total_participantes == lista_turmas_S[indice].qtd_max_participantes) {
+        // Usar o indíce de turma para achar os indices de curso e instrutor
+        int indice_turma = validate_turma_matricula(lista_turmas_S, contA_turma, matricula_controle.codigo_turma);
+        int indice_curso = validate_curso_matricula(lista_cursos_S, contA_curso, lista_turmas_S[indice_turma].codigo_curso);
+        int indice_instrutor = validate_instrutor_matricula(lista_instrutores_S, contA_instrutor, lista_turmas_S[indice_turma].codigo_instrutor);
+
+        // Listar turma, descrição, instrutor e valor por aula - fazer uma função para isso depois    
+        cout << "\n\nTurma: " << lista_turmas_S[indice_turma].codigo;
+        cout << "\nDescrição do curso: " << lista_cursos_S[indice_curso].descricao;
+        cout << "\nInstrutor: " << lista_instrutores_S[indice_instrutor].nome;
+        cout << "\nValor por aula: R$" << lista_cursos_S[indice_curso].valor_por_aula;
+    
+        if (lista_turmas_S[indice_turma].total_participantes == lista_turmas_S[indice_turma].qtd_max_participantes) {
 
             string pause = "";
             int opcao;
@@ -349,19 +439,14 @@ void ler_matricula_T(matricula lista_matriculas_S[],
             continue;
         }
 
-
         cout << "\n Digite a quantidade de aulas: ";
         cin >> matricula_controle.qtd_aula;
 
         cout << "\nTotal a ser pago ";
-        cout << "R$: " << matricula_controle.qtd_aula * lista_cursos_S[lista_turmas_S[matricula_controle.codigo_turma].codigo_curso].valor_por_aula << "\n";
+        cout << "R$: " << matricula_controle.qtd_aula * lista_cursos_S[indice_curso].valor_por_aula << "\n";
 
-        matricula_controle.valor_total = matricula_controle.qtd_aula * lista_cursos_S[lista_turmas_S[matricula_controle.codigo_turma].codigo_curso].valor_por_aula;
-       
-        indice = validate_turma(lista_turmas_S, contA_turma, matricula_controle.codigo_turma);
-
-        lista_turmas_S[indice].total_participantes++;
-
+        matricula_controle.valor_total = matricula_controle.qtd_aula * lista_cursos_S[indice_curso].valor_por_aula;
+        lista_turmas_S[indice_turma].total_participantes++;
         lista_matriculas_T[i] = matricula_controle;
         contS_matricula++;
         contT_matricula++;
@@ -374,7 +459,16 @@ void ler_matricula_T(matricula lista_matriculas_S[],
     }
 }
 
-void listar_matriculas(matricula lista_matriculas[], int contA_matricula) {
+void listar_matriculas(matricula lista_matriculas_S[],
+                       aluno     lista_alunos_S[],
+                       curso     lista_cursos_S[],
+                       instrutor lista_instrutores_S[],
+                       turma     lista_turmas_S[],
+                       int contA_matricula,
+                       int contA_aluno,
+                       int contA_curso,
+                       int contA_instrutor,
+                       int contA_turma) {
     
     if (contA_matricula == 0) {
         cout << "\n NÃO há matriculas adicionadas!\n";
@@ -386,11 +480,16 @@ void listar_matriculas(matricula lista_matriculas[], int contA_matricula) {
 
         for (int i = 0; i < contA_matricula; i++) {
 
-            cout << "\nCódigo: " << lista_matriculas[i].codigo;
-            cout << "\n Código aluno: " << lista_matriculas[i].codigo_aluno;
-            cout << "\n  Código turma:  R$" << lista_matriculas[i].codigo_turma;
-            cout << "\n   Quantidade de aulas: " <<  lista_matriculas[i].qtd_aula;
-            cout << "\n    Valor total: R$" << lista_matriculas[i].valor_total << "\n"; 
+            int indice_aluno     = validate_aluno_matricula(lista_alunos_S, contA_aluno, lista_matriculas_S[i].codigo_aluno);
+            int indice_turma     = validate_turma_matricula(lista_turmas_S, contA_turma, lista_matriculas_S[i].codigo_turma);
+            int indice_curso     = validate_curso_matricula(lista_cursos_S, contA_curso, lista_turmas_S[indice_turma].codigo_curso);
+            int indice_instrutor = validate_instrutor_matricula(lista_instrutores_S, contA_instrutor, lista_turmas_S[indice_turma].codigo_instrutor);
+
+            cout << "\nCódigo             :   "   << lista_matriculas_S[i].codigo;
+            cout << "\nNome do aluno      :   "   << lista_alunos_S[indice_aluno].nome;
+            cout << "\nNome curso         :   "   << lista_cursos_S[indice_turma].descricao;
+            cout << "\nNome do instrutor  :   "   << lista_instrutores_S[indice_instrutor].nome; 
+            cout << "\nValor total        :   R$" << lista_matriculas_S[i].valor_total << "\n"; 
         }
     }
 }
