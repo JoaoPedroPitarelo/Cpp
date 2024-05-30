@@ -51,21 +51,44 @@ void incluir_instrutor(instrutor lista_instrutores_S[],
     contA = k;
 }
 
+int validate_cidade(cidade lista_cidades_S[], int contA, int codigo_procurado) {
+    
+    int inicio = 0;
+    int fim = contA;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (lista_cidades_S[meio].codigo == codigo_procurado) {
+            return meio;
+        }
+        
+        if (lista_cidades_S[meio].codigo < codigo_procurado) {
+            inicio = meio + 1;
+        }
+        else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+
 void listar_instrutores(instrutor lista_instrutores[], int contA_instrutor) {
 
     if (contA_instrutor == 0) {
-        cout << "\n NÃO há instrutores adicionados!\n";
+        cout << "NÃO há instrutores adicionados!\n";
     }
     else {
 
-        cout << "\n\nInstrutores adicionados : " << contA_instrutor;
-        cout << "\nIstrutores restantes  : " << (T_INSTRUTOR - contA_instrutor) << "\n";
+        cout << "Instrutores adicionados : " << contA_instrutor;
+        cout << "\nIstrutores restantes    : " << (T_INSTRUTOR - contA_instrutor) << "\n";
 
         for (int i = 0; i < contA_instrutor; i++) {
-            cout << "\nCódigo: " << lista_instrutores[i].codigo;
-            cout << "\n Nome: " << lista_instrutores[i].nome;
-            cout << "\n  Endereço: " << lista_instrutores[i].endereco;
-            cout << "\n   Código da cidade: " << lista_instrutores[i].codigo_cidade << "\n";
+            cout << "\nCódigo          : " << lista_instrutores[i].codigo;
+            cout << "\nNome            : " << lista_instrutores[i].nome;
+            cout << "\nEndereço        : " << lista_instrutores[i].endereco;
+            cout << "\nCódigo da cidade: " << lista_instrutores[i].codigo_cidade << "\n";
         }
     }
 }
@@ -84,8 +107,8 @@ void ler_instrutor_S(instrutor lista_instrutores_S[],
         if (!contA_cidade) {
 
             string pause = " ";
-            cout << "\n É necessário ADICIONAR cidades PRIMEIRO!";
-            cout << "\n Pressione qualquer tecla para continuar: \n";
+            cout << " É necessário ADICIONAR cidades PRIMEIRO!";
+            cout << "\n\n Pressione qualquer tecla para continuar: \n";
             cin.ignore();
             getline(cin, pause);
             break;
@@ -108,7 +131,7 @@ void ler_instrutor_S(instrutor lista_instrutores_S[],
 
                 if (instrutor_controle.codigo == lista_instrutores_S[j].codigo) {
 
-                    cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
+                    cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n\n";
                     codigo_duplicado = true;
                     break;
                 }
@@ -117,37 +140,34 @@ void ler_instrutor_S(instrutor lista_instrutores_S[],
 
         if (codigo_duplicado) continue;
 
-        cout << " Digite o nome do instrutor: ";
+        cout << "Digite o nome do instrutor  : ";
         getline(cin, instrutor_controle.nome);
 
-        cout << "  Digite seu endereço: ";
+        cout << "Digite seu endereço         : ";
         getline(cin, instrutor_controle.endereco);
      
-        cout << "--------------------\n";
-
-        listar_cidades(lista_cidades_S, contA_cidade);
-        cout << "\n Digite o código da cidade: ";
+        // listar_cidades(lista_cidades_S, contA_cidade);
+        cout << "Digite o código da cidade   : ";
         cin >> instrutor_controle.codigo_cidade;
         cin.ignore();
 
-        // verificar se o código da cidade digitado é válido
-        for (int j = 0; j < contA_cidade; j++) {
-            if (instrutor_controle.codigo_cidade == lista_cidades_S[j].codigo) {
-                cidade_valida = true;
-                break;
-            }
-        }
+        int indice_cidade = validate_cidade(lista_cidades_S, contA_cidade, instrutor_controle.codigo_cidade);
 
-        if (!cidade_valida) {
+        if (indice_cidade == -1) {
+            
             cout << "\nCódigo da cidade INVALIDA!\n\n";
             continue;
         }
+
+        cout << "\nCódigo da cidade: " << lista_cidades_S[indice_cidade].codigo; 
+        cout << "\nNome da cidade  : " << lista_cidades_S[indice_cidade].nome;
+        cout << "\nEstado da cidade: " << lista_cidades_S[indice_cidade].estado;
        
         lista_instrutores_S[contS_instrutor] = instrutor_controle;
         contS_instrutor++;
         i++;
 
-        cout << "\nDeseja adicionar mais um instrutor: (0 = NAO) (1 = SIM)\n";
+        cout << "\n\nDeseja adicionar mais um instrutor: (0 = NAO) (1 = SIM)\n";
         cin >> controle;
         
         if (controle == 0) break;
@@ -194,7 +214,7 @@ void ler_instrutor_T(instrutor lista_instrutores_S[],
             if (instrutor_controle.codigo == lista_instrutores_S[j].codigo ||
                 instrutor_controle.codigo == lista_instrutores_T[j].codigo) {
 
-                cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
+                cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n\n";
                 codigo_duplicado = true;
                 break;
             }
@@ -202,36 +222,31 @@ void ler_instrutor_T(instrutor lista_instrutores_S[],
 
         if (codigo_duplicado) continue;
 
-        cout << " Digite o nome do instrutor: ";
+        cout << "Digite o nome do instrutor  : ";
         getline(cin, instrutor_controle.nome);
 
-        cout << "  Digite seu endereço: ";
+        cout << "Digite seu endereço         : ";
         getline(cin, instrutor_controle.endereco);
-
-        cout << "--------------------";
-
-        listar_cidades(lista_cidades_S, contA_cidade);
-        cout << "\n Digite o código da cidade: ";
+    
+        cout << "Digite o código da cidade   : ";
         cin >> instrutor_controle.codigo_cidade;
         cin.ignore();
 
-        // verificar se o código da cidade digitado é válido
-        for (int j = 0; j < contA_cidade; j++) {
-            if (instrutor_controle.codigo_cidade == lista_cidades_S[j].codigo) {
-                cidade_valida = true;
-                break;
-            }
-        }
+        int indice_cidade = validate_cidade(lista_cidades_S, contA_cidade, instrutor_controle.codigo_cidade);
 
-        if (!cidade_valida) {
+        if (indice_cidade == -1) {
+
             cout << "\nCódigo da cidade INVALIDA!\n\n";
             continue;
         }
-
-
+        
+        cout << "\nCódigo da cidade: " << lista_cidades_S[indice_cidade].codigo; 
+        cout << "\nNome da cidade  : " << lista_cidades_S[indice_cidade].nome;
+        cout << "\nEstado da cidade: " << lista_cidades_S[indice_cidade].estado;
+       
         lista_instrutores_T[i] = instrutor_controle;
 
-        cout << "\nDeseja adicionar mais um instrutor: (0 = NAO) (1 = SIM)\n";
+        cout << "\n\nDeseja adicionar mais um instrutor: (0 = NAO) (1 = SIM)\n";
         cin >> controle;
 
         contS_instrutor++;

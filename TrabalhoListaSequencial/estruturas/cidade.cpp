@@ -89,16 +89,16 @@ void buscar_cidade(cidade lista_cidades[], int contA) {
             cout << "\nCidade encontrada! \n";
 
             cout << "\nCódigo: " << lista_cidades[i].codigo;
-            cout << "\n Nome: " << lista_cidades[i].nome;
-            cout << "\n  Estado: " << lista_cidades[i].estado << "\n";
+            cout << "\nNome  : " << lista_cidades[i].nome;
+            cout << "\nEstado: " << lista_cidades[i].estado << "\n";
             
             cidade_encontrada = true;
         }
 
-        // Caso não exista o código da cidade
-        if (inicio == fim) {
-            cidade_encontrada = false;
-        }
+        // // Caso não exista o código da cidade
+        // if (inicio == fim) {
+        //     cidade_encontrada = false;
+        // }
 
         if (cidade_procurada > lista_cidades[meio].codigo) {
           
@@ -151,10 +151,10 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
 
         if (codigo_duplicado) continue;
 
-        cout << " Digite o nome da cidade: ";
+        cout << "Digite o nome da cidade  : ";
         getline(cin, cidade_controle.nome);
 
-        cout << "  Digite o UF: ";
+        cout << "Digite o UF              : ";
         cin >> cidade_controle.estado;
 
         lista_cidades_S[contS] = cidade_controle;
@@ -215,10 +215,10 @@ void ler_cidade_T(cidade lista_cidades_T[],
         if (codigo_duplicado) continue;
 
 
-        cout << " Digite o nome da cidade: ";
+        cout << "Digite o nome da cidade  : ";
         getline(cin, cidade_controle.nome);
 
-        cout << "  Digite o UF: ";
+        cout << "Digite o UF              : ";
         cin >> cidade_controle.estado;
 
         lista_cidades_T[i] = cidade_controle;

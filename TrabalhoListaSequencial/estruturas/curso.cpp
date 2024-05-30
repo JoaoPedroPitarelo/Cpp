@@ -61,9 +61,9 @@ void listar_cursos(curso lista_cursos[], int contA_curso) {
         cout << "\nCursos restantes  : " << (T_CURSO - contA_curso) << "\n";
 
         for (int i = 0; i < contA_curso; i++) {
-            cout << "\nCódigo: " << lista_cursos[i].codigo;
-            cout << "\n Descrição: " << lista_cursos[i].descricao;
-            cout << "\n  Valor p/aula: R$"<< lista_cursos[i].valor_por_aula << "\n"; 
+            cout << "\nCódigo        : " << lista_cursos[i].codigo;
+            cout << "\nDescrição     : " << lista_cursos[i].descricao;
+            cout << "\nValor p/aula  : R$"<< lista_cursos[i].valor_por_aula << "\n"; 
         }
     }
 }
@@ -78,9 +78,9 @@ void ler_curso_S(curso lista_cursos_S[], int &contS) {
         curso curso_controle;
         bool codigo_duplicado = false;
 
-        cout << "\n-----Leitura Curso-----";
+        cout << "-----Leitura Curso-----";
 
-        cout << "\nDigite o código: ";
+        cout << "\nDigite o código            : ";
         cin >> curso_controle.codigo;
         cin.ignore();
 
@@ -102,10 +102,10 @@ void ler_curso_S(curso lista_cursos_S[], int &contS) {
             continue;
         }
 
-        cout << " Digite a descrição do curso: ";
+        cout << "Digite a descrição do curso: ";
         getline(cin, curso_controle.descricao);
 
-        cout << "  Digite o valor por aula: ";
+        cout << "Digite o valor por aula    : ";
         cin >> curso_controle.valor_por_aula;
 
         lista_cursos_S[contS] = curso_controle;
@@ -145,9 +145,9 @@ void ler_curso_T(curso lista_cursos_S[],
         curso curso_controle;
         bool codigo_duplicado = false;
 
-        cout << "\n-----Leitura Curso-----";
+        cout << "-----Leitura Curso-----";
 
-        cout << "\nDigite o código: ";
+        cout << "\nDigite o código            : ";
         cin >> curso_controle.codigo;
         cin.ignore();
 
@@ -165,10 +165,10 @@ void ler_curso_T(curso lista_cursos_S[],
 
         if (codigo_duplicado) continue;
 
-        cout << " Digite a descrição do curso: ";
+        cout << "Digite a descrição do curso: ";
         getline(cin, curso_controle.descricao);
 
-        cout << "  Digite o valor por aula: ";
+        cout << "Digite o valor por aula    : ";
         cin >> curso_controle.valor_por_aula;
 
         lista_cursos_T[contT] = curso_controle;

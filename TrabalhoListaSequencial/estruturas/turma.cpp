@@ -53,7 +53,7 @@ void incluir_turma(turma lista_turmas_S[],
 }
 
 // Funções interna
-int validate_curso_turma(curso lista_cursos_S[], int contA, int codigo_procurado) {
+int validate_curso(curso lista_cursos_S[], int contA, int codigo_procurado) {
 
     int inicio = 0;
     int fim = contA;
@@ -76,7 +76,7 @@ int validate_curso_turma(curso lista_cursos_S[], int contA, int codigo_procurado
     return -1;
 }
 
-int validate_instrutor_turma(instrutor lista_instrutores_S[], int contA, int codigo_procurado) {
+int validate_instrutor(instrutor lista_instrutores_S[], int contA, int codigo_procurado) {
 
     int inicio = 0;
     int fim = contA;
@@ -99,45 +99,37 @@ int validate_instrutor_turma(instrutor lista_instrutores_S[], int contA, int cod
     return -1;
 }
 
-int validate_cidade_turma(cidade lista_cidades_S[], int contA, int codigo_procurado) {
-
-    int inicio = 0;
-    int fim = contA;
-
-    while (inicio <= fim) {
-        int meio = (inicio + fim) / 2;
-
-        if (lista_cidades_S[meio].codigo == codigo_procurado) {
-            return meio;
-        }
-        
-        if (lista_cidades_S[meio].codigo < codigo_procurado) {
-            inicio = meio + 1;
-        }
-        else {
-            fim = meio - 1;
-        }
-    }
-
-    return -1;
-}
-
-void listar_turmas(turma lista_turmas_S[], int contA_turma) {
+void listar_turmas_completas(turma lista_turmas_S[],
+                  instrutor lista_instrutores_S[],
+                  curso lista_cursos_S[],
+                  cidade lista_cidades_S[],
+                  int contA_turma,
+                  int contA_instrutor,
+                  int contA_curso,
+                  int contA_cidade) {
 
     if (contA_turma == 0) {
-        cout << "\n NÃO há turmas adicionadas!\n";
+        cout << "NÃO há turmas adicionadas!";
     }
     else {
 
-        cout << "\n\nTurmas adicionadas : " << contA_turma;
-        cout << "\nTurmas restantes   : " << (T_TURMA - contA_turma) << "\n";
+        cout << "\nTurmas completas: \n";
 
         for (int i = 0; i < contA_turma; i++) {
-            cout << "\n\nCódigo da turma: " << lista_turmas_S[i].codigo;
-            cout << "\n Código do curso: " <<  lista_turmas_S[i].codigo_curso;
-            cout << "\n  Código do instrutor: " << lista_turmas_S[i].codigo_instrutor;
-            cout << "\n   Total de participantes: " << lista_turmas_S[i].total_participantes;
-            cout << "\n    Quantidade máxima de participantes: " << lista_turmas_S[i].qtd_max_participantes;
+
+            if (lista_turmas_S[i].total_participantes == lista_turmas_S[i].qtd_max_participantes) {
+
+                int indice_curso = validate_curso(lista_cursos_S, contA_curso, lista_turmas_S[i].codigo_curso);
+                int indice_instrutor = validate_instrutor(lista_instrutores_S, contA_instrutor, lista_turmas_S[i].codigo_instrutor);
+                int indice_cidade = validate_cidade(lista_cidades_S, contA_cidade, lista_instrutores_S[indice_instrutor].codigo_cidade);
+
+                cout << "\nCódigo da turma    : " << lista_turmas_S[i].codigo;
+                cout << "\nNome do curso      : " << lista_cursos_S[indice_curso].descricao;
+                cout << "\nNome do instrutor  : " << lista_instrutores_S[indice_instrutor].nome;
+                cout << "\nCidade do instrutor: " << lista_cidades_S[indice_cidade].nome;
+                cout << "\nTotal participantes: " << lista_turmas_S[i].total_participantes;
+                cout << "\nQuantidade máxima  : " << lista_turmas_S[i].qtd_max_participantes;
+            }
         }
     }
 }
@@ -186,9 +178,9 @@ void buscar_turma(turma lista_turmas_S[],
         if (codigo_resultado != -1) {
             
             // Usando indíce de turma para achar o indice de curso, instrutor e cidade
-            int indice_curso     = validate_curso_turma(lista_cursos_S, contA_curso, lista_turmas_S[codigo_resultado].codigo_curso);
-            int indice_instrutor = validate_instrutor_turma(lista_instrutores_S, contA_instrutor, lista_turmas_S[codigo_resultado].codigo_instrutor);
-            int indice_cidade    = validate_cidade_turma(lista_cidades_S, contA_cidade, lista_instrutores_S[indice_instrutor].codigo_cidade);
+            int indice_curso     = validate_curso(lista_cursos_S, contA_curso, lista_turmas_S[codigo_resultado].codigo_curso);
+            int indice_instrutor = validate_instrutor(lista_instrutores_S, contA_instrutor, lista_turmas_S[codigo_resultado].codigo_instrutor);
+            int indice_cidade    = validate_cidade(lista_cidades_S, contA_cidade, lista_instrutores_S[indice_instrutor].codigo_cidade);
 
             cout << "\n Turma encontrada!\n";
 
@@ -199,7 +191,7 @@ void buscar_turma(turma lista_turmas_S[],
         }
         else {
 
-            cout << "\n Turma não encontrada!!!\n";
+            cout << "\nTurma não encontrada!!!";
         }
     }
 }
@@ -207,9 +199,11 @@ void buscar_turma(turma lista_turmas_S[],
 void ler_turma_S(turma lista_turmas_S[],
                  curso lista_cursos_S[],
                  instrutor lista_instrutores_S[],
+                 cidade lista_cidades_S[],
                  int &contS_turma,
                  int contA_curso,
-                 int contA_instrutor) {
+                 int contA_instrutor,
+                 int contA_cidade) {
 
     int controle = 0;
 
@@ -220,22 +214,11 @@ void ler_turma_S(turma lista_turmas_S[],
 
             string pause = " ";
             cout << "\n É necessário ADICIONAR CURSOS E INSTRUTORES PRIMEIRO!";
-            cout << "\n Pressione qualquer tecla para continuar: \n";
+            cout << "\n\n Pressione qualquer tecla para continuar: \n";
             cin.ignore();
             getline(cin, pause);
             break;  
         }
-
-        // // Caso não haja cursos adicionados
-        // if (!contA_instrutor) {
-
-        //     string pause = " ";
-        //     cout << "\n É necessário ADICIONAR instrutores PRIMEIRO!";
-        //     cout << "\n Pressione qualquer tecla para continuar: \n";
-        //     cin.ignore();
-        //     getline(cin, pause);
-        //     break; 
-        // }
 
         turma turma_controle;
         bool codigo_duplicado = false;
@@ -263,43 +246,38 @@ void ler_turma_S(turma lista_turmas_S[],
 
         if (codigo_duplicado) continue;
 
-        listar_cursos(lista_cursos_S, contA_curso);
-        cout << "\n Digite o código do curso: ";
+        cout << "Digite o código do curso: ";
         cin >> turma_controle.codigo_curso;
 
-        // Verificar se o código da curso digitado é valido
-        for (int j = 0; j < contA_curso; j++) {
+        int indice_curso = validate_curso(lista_cursos_S, contA_curso, turma_controle.codigo_curso);
 
-            if (turma_controle.codigo_curso == lista_cursos_S[j].codigo) {
-                
-                curso_valido = true;
-                break;
-            }
-        }
+        if (indice_curso == -1) {
 
-        if (!curso_valido) {
             cout << "\n Código do curso INVÁLIDO!\n\n";
             continue;
         }
 
-        listar_instrutores(lista_instrutores_S, contA_instrutor);
-        cout << "\n  Digite o código do instrutor: ";
+        // Listando curso selecionado
+        cout << "\nDescrição     : " << lista_cursos_S[indice_curso].descricao;
+        cout << "\nValor por aula: R$" << lista_cursos_S[indice_curso].valor_por_aula;
+
+        cout << "\n\nDigite o código do instrutor: ";
         cin >> turma_controle.codigo_instrutor;
 
-        // Verificar se o código do instrutor digitado é valido
-        for (int j = 0; j < contA_instrutor; j++) {
-            if (turma_controle.codigo_instrutor == lista_instrutores_S[j].codigo) {
-                instrutor_valido = true;
-                break;
-            }
-        }
+        int indice_instrutor = validate_instrutor(lista_instrutores_S, contA_instrutor, turma_controle.codigo_instrutor);
+        int indice_cidade = validate_cidade(lista_cidades_S, contA_cidade, lista_instrutores_S[indice_instrutor].codigo_cidade);
 
-        if(!instrutor_valido) {
+        if(indice_instrutor == -1) {
+
             cout << "\n Código do instrutor INVÁLIDO\n\n";
             continue;
         }
 
-        cout << "   Digite a quantidade máxima de participantes da turma: ";
+        // Listandno instrutor
+        cout << "\nNome do instrutor: " << lista_instrutores_S[indice_instrutor].nome;
+        cout << "\nNome da cidade   : " << lista_cidades_S[indice_cidade].nome;
+
+        cout << "\n\nDigite a quantidade máxima de participantes da turma: ";
         cin >> turma_controle.qtd_max_participantes;
 
         turma_controle.total_participantes = 0;
@@ -308,7 +286,7 @@ void ler_turma_S(turma lista_turmas_S[],
         contS_turma++;
         i++;
 
-        cout << "Deseja adicionar mais uma turma? (0 = NÃO) (1 = SIM)\n";
+        cout << "\nDeseja adicionar mais uma turma? (0 = NÃO) (1 = SIM)\n";
         cin >> controle;
 
         if (controle == 0) break;
@@ -319,10 +297,12 @@ void ler_turma_T(turma lista_turmas_S[],
                  turma lista_turmas_T[],
                  curso lista_cursos_S[],
                  instrutor lista_instrutores_S[],
+                 cidade lista_cidades_S[],
                  int &contT_turma,
                  int contS_turma,
                  int contA_curso,
-                 int contA_instrutor) {
+                 int contA_instrutor,
+                 int contA_cidade) {
 
     int i = 0;
     contT_turma = 0;
@@ -363,41 +343,38 @@ void ler_turma_T(turma lista_turmas_S[],
 
         if (codigo_duplicado) continue;
 
-        listar_cursos(lista_cursos_S, contA_curso);
-        cout << " Digite o código do curso: ";
+        cout << "Digite o código do curso: ";
         cin >> turma_controle.codigo_curso;
 
-        // Verificar se o código da curso digitado é valido
-        for (int j = 0; j < contA_curso; j++) {
-            if (turma_controle.codigo_curso == lista_cursos_S[j].codigo) {
-                curso_valido = true;
-                break;
-            }
-        }
+        int indice_curso  = validate_curso(lista_cursos_S, contA_curso, turma_controle.codigo_curso);
 
-        if (!curso_valido) {
+        if (indice_curso == -1) {
+
             cout << "\n Código do curso INVÁLIDO!\n\n";
             continue;
         }
 
-        listar_instrutores(lista_instrutores_S, contA_instrutor);
-        cout << "  Digite o código do instrutor: ";
+        // Listando curso selecionado
+        cout << "\nDescrição     : " << lista_cursos_S[indice_curso].descricao;
+        cout << "\nValor por aula: R$" << lista_cursos_S[indice_curso].valor_por_aula;
+
+        cout << "\n\nDigite o código do instrutor: ";
         cin >> turma_controle.codigo_instrutor;
 
-        // Verificar se o código do instrutor digitado é valido
-        for (int j = 0; j < contA_instrutor; j++) {
-            if (turma_controle.codigo_instrutor == lista_instrutores_S[j].codigo) {
-                instrutor_valido = true;
-                break;
-            }
-        }
+        int indice_instrutor = validate_instrutor(lista_instrutores_S, contA_instrutor, turma_controle.codigo_instrutor);
+        int indice_cidade    = validate_cidade(lista_cidades_S, contA_cidade, lista_instrutores_S[indice_instrutor].codigo_cidade);
 
-        if (!instrutor_valido) {
+        if (indice_instrutor == -1) {
+
             cout << "\n Código do instrutor INVÁLIDO\n\n";
             continue;
         }
 
-        cout << "   Digite a quantidade máxima de participantes da turma: ";
+        // Listando instrutor
+        cout << "\nNome do instrutor: " << lista_instrutores_S[indice_instrutor].nome;
+        cout << "\nNome da cidade   : " << lista_cidades_S[indice_cidade].nome;
+
+        cout << "\n\nDigite a quantidade máxima de participantes da turma: ";
         cin >> turma_controle.qtd_max_participantes;
 
         turma_controle.total_participantes = 0;

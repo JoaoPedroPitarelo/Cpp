@@ -1,5 +1,6 @@
 // main.cpp
 #include <iostream>
+#include <windows.h>
 #include <locale.h>
 #include <stdlib.h>
 using namespace std;
@@ -7,11 +8,18 @@ using namespace std;
 // Arquivo de inclusões
 #include "./include.cpp"
 
+
 // Protótipos de funções
 void inicioPrograma();
 
 int main() {
 
+    // Definir acentuação
+    setlocale(LC_ALL, "pt-br");   
+    UINT CPAGE_UTF8 = 65001;
+    UINT CPAGE_DEFAULT = GetConsoleOutputCP();
+    SetConsoleOutputCP(CPAGE_UTF8);
+    
     inicioPrograma();
 }
 
@@ -45,12 +53,13 @@ void inicioPrograma() {
         string pause = " ";
 
         // "Interface"
-        system("clear");
+        system("cls");
         cout << "OPÇÕES: [1] Adicionar Cidade    [12] Buscar cidade\n";
         cout << "        [2] Adicionar Curso     [22] Listar cursos\n";
         cout << "        [3] Adicionar Instrutor [32] Listar instrutores\n";
         cout << "        [4] Adicionar Aluno     [42] Excluir aluno\n";
-        cout << "        [5] Adicionar Turma     [52] Listar todas as turmas [53] Buscar turma\n";
+        cout << "        [5] Adicionar Turma     [52] Listar turmas cheias";
+        cout << "\n                                [53] Buscar turma\n";
         cout << "        [6] Adicionar Matricula [62] Listar matriculas\n";
         
         cout << "\nEscolha: ";
@@ -59,7 +68,7 @@ void inicioPrograma() {
         switch (opcao) {
         // Cidade -------------------
         case 1:
-            system("clear");
+            system("cls");
             if (contS_cidade == 0) {
                 ler_cidade_S(lista_cidades_S, contS_cidade);
             }
@@ -72,7 +81,7 @@ void inicioPrograma() {
             break;
 
         case 12:
-            system("clear");
+            system("cls");
 
             buscar_cidade(lista_cidades_S, contA_cidade);
 
@@ -83,7 +92,7 @@ void inicioPrograma() {
 
         // Curso -------------------
         case 2:
-            system("clear");
+            system("cls");
             if (contS_curso == 0) {
                 ler_curso_S(lista_cursos_S, contS_curso);
             }
@@ -96,7 +105,7 @@ void inicioPrograma() {
             break;
 
         case 22:
-            system("clear");
+            system("cls");
             listar_cursos(lista_cursos_S, contA_curso);
                 
             cout << "\n Pressione qualquer tecla para continuar: \n";
@@ -106,7 +115,7 @@ void inicioPrograma() {
 
         // Instrutor -------------------
         case 3:
-            system("clear");
+            system("cls");
             if (contS_instrutor == 0) {
                 ler_instrutor_S(lista_instrutores_S, contS_instrutor, lista_cidades_S, contA_cidade);
             }
@@ -119,7 +128,7 @@ void inicioPrograma() {
             break;
 
         case 32:
-            system("clear");
+            system("cls");
             listar_instrutores(lista_instrutores_S, contA_instrutor);
 
             cout << "\n Pressione qualquer tecla para continuar: \n";
@@ -129,7 +138,7 @@ void inicioPrograma() {
 
         // Aluno -------------------
         case 4:
-            system("clear");
+            system("cls");
             if(contS_aluno == 0) {
                 ler_aluno_S(lista_alunos_S, contS_aluno, lista_cidades_S, contA_cidade);
             }
@@ -142,7 +151,7 @@ void inicioPrograma() {
             break;
 
         case 42:
-            system("clear");
+            system("cls");
 
             excluir_aluno(lista_alunos_S, lista_alunos_A, contA_aluno, contS_aluno);
             listar_alunos(lista_alunos_S, contA_aluno);
@@ -155,12 +164,12 @@ void inicioPrograma() {
 
         // Turma -------------------
         case 5:
-            system("clear");
+            system("cls");
             if(contS_turma == 0) {
-                ler_turma_S(lista_turmas_S, lista_cursos_S,lista_instrutores_S, contS_turma, contA_curso, contA_instrutor);
+                ler_turma_S(lista_turmas_S, lista_cursos_S,lista_instrutores_S, lista_cidades_S, contS_turma, contA_curso, contA_instrutor, contA_cidade);
             }
             else {
-                ler_turma_T(lista_turmas_S, lista_turmas_T, lista_cursos_S, lista_instrutores_S, contT_turma, contS_turma, contA_curso, contA_instrutor);
+                ler_turma_T(lista_turmas_S, lista_turmas_T, lista_cursos_S, lista_instrutores_S, lista_cidades_S, contT_turma, contS_turma, contA_curso, contA_instrutor, contA_cidade);
             }
 
             incluir_turma(lista_turmas_S, lista_turmas_T, lista_turmas_A, contS_turma, contT_turma, contA_turma);
@@ -169,16 +178,17 @@ void inicioPrograma() {
             break;
 
         case 52: 
-            system("clear");
+            system("cls");
 
-            listar_turmas(lista_turmas_S, contA_turma);
-            cout << "\n Pressione qualquer tecla para continuar: \n";
+            listar_turmas_completas(lista_turmas_S, lista_instrutores_S, lista_cursos_S, lista_cidades_S, contA_turma, contA_instrutor, contA_curso, contA_cidade);
+            
+            cout << "\n\n Pressione qualquer tecla para continuar: \n";
             cin.ignore();
             getline(cin, pause);
             break;
 
         case 53:
-            system("clear");
+            system("cls");
 
             buscar_turma(lista_turmas_S, lista_cursos_S, lista_instrutores_S, lista_cidades_S, contA_turma, contA_curso, contA_instrutor, contA_cidade);
 
@@ -189,12 +199,12 @@ void inicioPrograma() {
             break;
         // Matricula --------------------
         case 6:
-            system("clear");
+            system("cls");
             if (contS_matricula == 0) {
-                ler_matricula_S(lista_matriculas_S, lista_alunos_S, lista_turmas_S, lista_cursos_S, lista_instrutores_S, contS_matricula, contA_aluno, contA_turma, contA_curso, contA_instrutor);
+                ler_matricula_S(lista_matriculas_S, lista_alunos_S, lista_turmas_S, lista_cursos_S, lista_instrutores_S, lista_cidades_S, contS_matricula, contA_aluno, contA_turma, contA_curso, contA_instrutor, contA_cidade);
             }
             else {
-                ler_matricula_T(lista_matriculas_S, lista_matriculas_T, lista_alunos_S, lista_turmas_S, lista_cursos_S, lista_instrutores_S, contT_matricula, contS_matricula, contA_aluno, contA_turma, contA_curso, contA_instrutor);
+                ler_matricula_T(lista_matriculas_S, lista_matriculas_T, lista_alunos_S, lista_turmas_S, lista_cursos_S, lista_instrutores_S, lista_cidades_S, contT_matricula, contS_matricula, contA_aluno, contA_turma, contA_curso, contA_instrutor, contA_cidade);
             }
 
             incluir_matricula(lista_matriculas_S, lista_matriculas_T, lista_matriculas_A, contS_matricula, contT_matricula, contA_matricula);
@@ -202,7 +212,7 @@ void inicioPrograma() {
 
             break;
         case 62:
-            system("clear");
+            system("cls");
 
             listar_matriculas(lista_matriculas_S, lista_alunos_S, lista_cursos_S, lista_instrutores_S, lista_turmas_S, contA_matricula, contA_aluno, contA_curso, contA_instrutor, contA_turma);
             cout << "\n Pressione qualquer tecla para continuar: \n";
