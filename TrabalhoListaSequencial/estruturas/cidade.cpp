@@ -69,54 +69,51 @@ void listar_cidades(cidade lista_cidades[], int contA_cidade) {
     }
 }
 
-// Buscar cidade
-void buscar_cidade(cidade lista_cidades[], int contA) {
-
+int validate_cidade(cidade lista_cidades_S[], int contA, int codigo_procurado) {
+    
     int inicio = 0;
     int fim = contA;
-    int meio = ((inicio + fim) / 2);
-    int cidade_procurada;
-    bool cidade_encontrada = false;
 
-    cout << "Digite o código da cidade: ";
-    cin >> cidade_procurada;
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
 
-
-    for (int i = 0; i < contA; i++) {
-    
-        // Encotrou a cidade
-        if (cidade_procurada == lista_cidades[i].codigo) {
-            cout << "\nCidade encontrada! \n";
-
-            cout << "\nCódigo: " << lista_cidades[i].codigo;
-            cout << "\nNome  : " << lista_cidades[i].nome;
-            cout << "\nEstado: " << lista_cidades[i].estado << "\n";
-            
-            cidade_encontrada = true;
+        if (lista_cidades_S[meio].codigo == codigo_procurado) {
+            return meio;
         }
-
-        // // Caso não exista o código da cidade
-        // if (inicio == fim) {
-        //     cidade_encontrada = false;
-        // }
-
-        if (cidade_procurada > lista_cidades[meio].codigo) {
-          
+        
+        if (lista_cidades_S[meio].codigo < codigo_procurado) {
             inicio = meio + 1;
-            meio = ((inicio + fim) / 2);
-            continue;
         }
-
-        if (cidade_procurada < lista_cidades[meio].codigo) {
-            
-            fim = meio -1;
-            meio = ((inicio + fim) / 2);
-            continue;
+        else {
+            fim = meio - 1;
         }
     }
 
-    if (!cidade_encontrada) 
+    return -1;
+}
+
+// Buscar cidade
+void buscar_cidade(cidade lista_cidades[], int contA) {
+
+    int cidade_procurada;
+    int indice_cidade;
+  
+    cout << "Digite o código da cidade: ";
+    cin >> cidade_procurada;
+
+    indice_cidade = validate_cidade(lista_cidades, contA, cidade_procurada);
+
+    if (indice_cidade != -1) {
+
+        cout << "\nCidade encontrada! \n";
+
+        cout << "\nCódigo: " << lista_cidades[indice_cidade].codigo;
+        cout << "\nNome  : " << lista_cidades[indice_cidade].nome;
+        cout << "\nEstado: " << lista_cidades[indice_cidade].estado << "\n";
+    }
+    else {
         cout << "\nCidade NÃO encontrada!\n";
+    }
 }
 
 // Primeira leitura
@@ -127,7 +124,7 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
     for (int i = 0; i < T_CIDADE;) {
         
         cidade cidade_controle;
-        bool codigo_duplicado = false;
+        int is_duplicado;
 
         cout << "---- Ler Cidade ----\n";
 
@@ -135,21 +132,14 @@ void ler_cidade_S(cidade lista_cidades_S[], int &contS) {
         cin >> cidade_controle.codigo;
         cin.ignore();
 
-        // Verifição para ver se o usuário não está digitando um mesmo código já adicionado
-        if (i != 0) {
+        is_duplicado = validate_cidade(lista_cidades_S, contS, cidade_controle.codigo);
 
-            for (int j = 0; j < contS; j++) {
-
-                if (cidade_controle.codigo == lista_cidades_S[j].codigo) {
-                    
-                    cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
-                    codigo_duplicado = true;
-                    break;
-                }
-            }
+        if (is_duplicado != -1) {
+            
+            cout << "\nCódigo duplicado!!!";
+            cout << "\nDigite um código diferente\n\n";
+            continue;
         }
-
-        if (codigo_duplicado) continue;
 
         cout << "Digite o nome da cidade  : ";
         getline(cin, cidade_controle.nome);
@@ -192,7 +182,7 @@ void ler_cidade_T(cidade lista_cidades_T[],
         }
 
         cidade cidade_controle;
-        bool codigo_duplicado = false;
+        int is_duplicado;
 
         cout << "---- Ler Cidade ----\n";
 
@@ -200,20 +190,15 @@ void ler_cidade_T(cidade lista_cidades_T[],
         cin >> cidade_controle.codigo;
         cin.ignore();
    
-        // Verifição para ver se o usuário não está digitando um mesmo código já adicionado
-        for (int j = 0; j < (contT + contS); j++) {
+        is_duplicado = validate_cidade(lista_cidades_S, contS, cidade_controle.codigo);
+        is_duplicado += validate_cidade(lista_cidades_T, contT, cidade_controle.codigo);
+
+        if (is_duplicado >= -1) {
             
-            if (cidade_controle.codigo == lista_cidades_S[j].codigo ||
-                cidade_controle.codigo == lista_cidades_T[j].codigo) {
-
-                cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
-                codigo_duplicado = true;
-                break;
-            }
+            cout << "\nCódigo duplicado!!!";
+            cout << "\nDigite um código diferente\n\n";
+            continue;
         }
-        
-        if (codigo_duplicado) continue;
-
 
         cout << "Digite o nome da cidade  : ";
         getline(cin, cidade_controle.nome);

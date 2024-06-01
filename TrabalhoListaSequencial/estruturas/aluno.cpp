@@ -52,7 +52,7 @@ void incluir_aluno(aluno lista_alunos_S[],
 }
 
 
-int buscar_aluno(aluno lista_alunos_S[], int contA, int codigo_procurado) {
+int validate_aluno(aluno lista_alunos_S[], int contA, int codigo_procurado) {
 
     int inicio = 0;
     int fim = contA;
@@ -74,49 +74,6 @@ int buscar_aluno(aluno lista_alunos_S[], int contA, int codigo_procurado) {
 
     return -1;
 }
-
-// void buscar_aluno(aluno lista_alunos[], int contA, int aluno_procurado, int &codigo_aluno_encontrado) {
-
-//     int inicio = 0;
-//     int fim = contA;
-//     int meio = ((inicio + fim) / 2);
-//     bool aluno_encontrada = false;
-
-//     for (int i = 0; i <= contA; i++) {
-        
-//         //encontrou o aluno
-//         if (aluno_procurado == lista_alunos[i].codigo) {
-            
-//             codigo_aluno_encontrado = aluno_procurado;
-//             aluno_encontrada = true;
-//             break;
-//         }
-
-//         // Caso não exista o código do aluno
-//         if (inicio == fim) {
-//             codigo_aluno_encontrado = -1;
-//             aluno_encontrada = false;
-//         }
-
-//         if (aluno_procurado > lista_alunos[meio].codigo) {
-
-//             inicio = meio + 1;
-//             meio = ((inicio + fim) / 2);
-//             continue;
-//         }
-
-//         if (aluno_procurado < lista_alunos[meio].codigo) {
-
-//             fim = meio -1; 
-//             meio = ((inicio + fim) / 2);
-//             continue;
-//         }
-//     }
-
-//     if (!aluno_procurado) {
-//         codigo_aluno_encontrado = -1;
-//     }
-// }
 
 void arquivoA_passa_arquivoS_aluno(aluno lista_alunos_A[],
                                    aluno lista_alunos_S[],
@@ -140,10 +97,9 @@ void excluir_aluno(aluno lista_alunos_S[],
     cout << "\nDigite o código do aluno a ser excluído: ";
     cin >> codigo_aluno_procurado;
     
-    // buscar_aluno(lista_alunos_S, contA, codigo_aluno_procurado, codigo_aluno_encontrado);
-    int indice_aluno_excluido = buscar_aluno(lista_alunos_S, contA, codigo_aluno_procurado);
+    int indice_aluno_excluido = validate_aluno(lista_alunos_S, contA, codigo_aluno_procurado);
 
-    int k = 0; // final
+    int k = 0; 
 
     for (int i = 0; k < contA; i++) {
         
@@ -159,7 +115,8 @@ void excluir_aluno(aluno lista_alunos_S[],
     }
 
     if (k > 0) {
-        contA = k-1;// 'k -1' por conta de '1 <= contA', fazendo com que k fique igual a valor anterior.
+
+        contA = k-1;
         contS = k-1;
 
         arquivoA_passa_arquivoS_aluno(lista_alunos_A, lista_alunos_S, contS, contA);
@@ -182,6 +139,7 @@ void listar_alunos(aluno lista_alunos[], int contA_aluno) {
         cout << "\nAlunos restantes  : " << (T_ALUNO - contA_aluno) << "\n";
 
         for (int i = 0; i < contA_aluno; i++) {
+
             cout << "\nCódigo          : " << lista_alunos[i].codigo;
             cout << "\nNome            : " << lista_alunos[i].nome;
             cout << "\nEndereço        : " << lista_alunos[i].endereco;
@@ -212,7 +170,7 @@ void ler_aluno_S(aluno lista_alunos_S[],
         }
 
         aluno aluno_controle;
-        bool codigo_duplicado = false;
+        int is_duplicado;
         bool cidade_valida = false;
 
         cout << "---- Ler Aluno ----\n";
@@ -222,21 +180,14 @@ void ler_aluno_S(aluno lista_alunos_S[],
         cin >> aluno_controle.codigo;
         cin.ignore();
 
-        // Verificação para ver se o usuário não está digitando um mesmo código já digitado
-        if (i != 0) {
+        is_duplicado = validate_aluno(lista_alunos_S, contS_aluno, aluno_controle.codigo);
 
-            for (int j = 0; j < contS_aluno; j++) {
-
-                if (aluno_controle.codigo == lista_alunos_S[j].codigo) {
-
-                    cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
-                    codigo_duplicado = true;
-                    break;
-                }
-            }
+        if (is_duplicado != -1) {
+            
+            cout << "\nCódigo duplicado!!!";
+            cout << "\nDigite um código diferente\n\n";
+            continue;
         }
-
-        if (codigo_duplicado) continue;
 
         cout << "Digite o nome do aluno   : ";
         getline(cin, aluno_controle.nome);
@@ -283,7 +234,6 @@ void ler_aluno_T(aluno lista_alunos_S[],
     int i = 0;
     contT_aluno = 0;
     int controle = 0;
-    bool cidade_valida = false;
 
     for (; i < T_ALUNO;) {
 
@@ -298,7 +248,7 @@ void ler_aluno_T(aluno lista_alunos_S[],
         }
 
         aluno aluno_controle;
-        bool codigo_duplicado = false;
+        int is_duplicado;
 
         cout << "---- Ler aluno ----\n";
 
@@ -306,19 +256,15 @@ void ler_aluno_T(aluno lista_alunos_S[],
         cin >> aluno_controle.codigo;
         cin.ignore();
 
-        // Verificação para ver se o usuário não está digitando um mesmo código já digitado
-        for (int j = 0; j < (contT_aluno + contS_aluno); j++) {
+        is_duplicado = validate_aluno(lista_alunos_S, contS_aluno, aluno_controle.codigo);
+        is_duplicado += validate_aluno(lista_alunos_T, contT_aluno, aluno_controle.codigo);
 
-            if (aluno_controle.codigo == lista_alunos_S[j].codigo ||
-                aluno_controle.codigo == lista_alunos_T[j].codigo) {
-
-                cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
-                codigo_duplicado = true;
-                break;
-            }
-        }
-
-        if (codigo_duplicado) continue;
+        if (is_duplicado >= -1) {
+            
+            cout << "\nCódigo duplicado!!!";
+            cout << "\nDigite um código diferente\n\n";
+            continue;
+        } 
 
         cout << "Digite o nome do aluno   : ";
         getline(cin, aluno_controle.nome);

@@ -51,31 +51,6 @@ void incluir_matricula(matricula lista_matriculas_S[],
     
 }
 
-// Funções "internas"
-
-// Buscar indice dentro da lista de acordo com o código
-int validate_turma_matricula(turma lista_turmas_S[], int contA, int codigo_procurado) {
-
-    int inicio = 0;
-    int fim = contA;
-
-    while (inicio <= fim) {
-        int meio = (inicio + fim) / 2;
-
-        if (lista_turmas_S[meio].codigo == codigo_procurado) {
-            return meio;
-        }
-        
-        if (lista_turmas_S[meio].codigo < codigo_procurado) {
-            inicio = meio + 1;
-        }
-        else {
-            fim = meio - 1;
-        }
-    }
-
-    return -1;
-}
 
 int validate_matricula(matricula lista_matricula_S[], int contA, int codigo_procurado) {
 
@@ -90,29 +65,6 @@ int validate_matricula(matricula lista_matricula_S[], int contA, int codigo_proc
         }
         
         if (lista_matricula_S[meio].codigo < codigo_procurado) {
-            inicio = meio + 1;
-        }
-        else {
-            fim = meio - 1;
-        }
-    }
-
-    return -1;
-}
-
-int validate_aluno(aluno lista_alunos_S[], int contA, int codigo_procurado) {
-
-    int inicio = 0;
-    int fim = contA;
-
-    while (inicio <= fim) {
-        int meio = (inicio + fim) / 2;
-
-        if (lista_alunos_S[meio].codigo == codigo_procurado) {
-            return meio;
-        }
-        
-        if (lista_alunos_S[meio].codigo < codigo_procurado) {
             inicio = meio + 1;
         }
         else {
@@ -152,31 +104,21 @@ void ler_matricula_S(matricula lista_matriculas_S[],
         }
 
         matricula matricula_controle;
-        bool codigo_duplicado = false;
-        bool aluno_valido = false;
-        bool turma_valida = false;
-        bool curso_valido = false;
+        int is_duplicado;
 
         cout << "---- Ler matricula ----\n";
         
         cout << "Digite o código da matricula: ";
         cin >> matricula_controle.codigo;
 
-        // Verificar se o usuário não entrou um código já digitado
-        if (i != 0) {
+        is_duplicado = validate_matricula(lista_matriculas_S, contS_matricula, matricula_controle.codigo);
 
-            for (int j = 0; j < contS_matricula; j++) {
-
-                if (matricula_controle.codigo == lista_matriculas_S[j].codigo) {
-
-                    cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
-                    codigo_duplicado = true;
-                    break;
-                }
-            }
+        if (is_duplicado != -1) {
+            
+            cout << "\nCódigo duplicado!!!";
+            cout << "\nDigite um código diferente\n\n";
+            continue;
         }
-
-        if (codigo_duplicado) continue;
 
         cout << "Digite o código do aluno    : ";
         cin >> matricula_controle.codigo_aluno;
@@ -198,7 +140,7 @@ void ler_matricula_S(matricula lista_matriculas_S[],
         cin >> matricula_controle.codigo_turma;
 
         // Usando o indice de turma para achar os indíces de curso e de instrutor
-        int indice_turma     = validate_turma_matricula(lista_turmas_S, contA_turma, matricula_controle.codigo_turma);
+        int indice_turma     = validate_turma(lista_turmas_S, contA_turma, matricula_controle.codigo_turma);
         int indice_curso     = validate_curso(lista_cursos_S, contA_curso, lista_turmas_S[indice_turma].codigo_curso);
         int indice_instrutor = validate_instrutor(lista_instrutores_S, contA_instrutor, lista_turmas_S[indice_turma].codigo_instrutor);
 
@@ -278,31 +220,23 @@ void ler_matricula_T(matricula lista_matriculas_S[],
         }
 
         matricula matricula_controle;
-        bool codigo_duplicado = false;
-        bool aluno_valido = false;
-        bool turma_valida = false;
-        bool curso_valido = false;
-        bool instrutor_valido = false;
+        int is_duplicado;
 
         cout << "---- Ler matricula ----\n";
 
         cout << "Digite o código da matricula: ";
         cin >> matricula_controle.codigo;
 
-        // Verificar se o usuário não entrou um código ja digitado
-        for (int j = 0; j < (contS_matricula + contT_matricula); j++) {
+        is_duplicado = validate_matricula(lista_matriculas_S, contS_matricula, matricula_controle.codigo);
+        is_duplicado += validate_matricula(lista_matriculas_T, contT_matricula, matricula_controle.codigo);
 
-            if (matricula_controle.codigo == lista_matriculas_S[j].codigo ||
-                matricula_controle.codigo == lista_matriculas_T[j].codigo) {
-
-                cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
-                codigo_duplicado = true;
-                break;
-            }
+        if (is_duplicado >= -1) {
+            
+            cout << "\nCódigo duplicado!!!";
+            cout << "\nDigite um código diferente\n\n";
+            continue;
         }
-
-        if (codigo_duplicado) continue;
-
+        
         cout << "Digite o código do aluno    : ";
         cin >> matricula_controle.codigo_aluno;
 
@@ -323,7 +257,7 @@ void ler_matricula_T(matricula lista_matriculas_S[],
         cin >> matricula_controle.codigo_turma;
 
         // Usando o indíce de turma para achar os indices de curso e instrutor
-        int indice_turma = validate_turma_matricula(lista_turmas_S, contA_turma, matricula_controle.codigo_turma);
+        int indice_turma = validate_turma(lista_turmas_S, contA_turma, matricula_controle.codigo_turma);
         int indice_curso = validate_curso(lista_cursos_S, contA_curso, lista_turmas_S[indice_turma].codigo_curso);
         int indice_instrutor = validate_instrutor(lista_instrutores_S, contA_instrutor, lista_turmas_S[indice_turma].codigo_instrutor);
 
@@ -394,7 +328,7 @@ void listar_matriculas(matricula lista_matriculas_S[],
         for (int i = 0; i < contA_matricula; i++) {
 
             int indice_aluno     = validate_aluno(lista_alunos_S, contA_aluno, lista_matriculas_S[i].codigo_aluno);
-            int indice_turma     = validate_turma_matricula(lista_turmas_S, contA_turma, lista_matriculas_S[i].codigo_turma);
+            int indice_turma     = validate_turma(lista_turmas_S, contA_turma, lista_matriculas_S[i].codigo_turma);
             int indice_curso     = validate_curso(lista_cursos_S, contA_curso, lista_turmas_S[indice_turma].codigo_curso);
             int indice_instrutor = validate_instrutor(lista_instrutores_S, contA_instrutor, lista_turmas_S[indice_turma].codigo_instrutor);
 

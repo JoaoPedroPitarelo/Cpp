@@ -50,6 +50,31 @@ void incluir_curso(curso lista_cursos_S[T_CURSO],
     contA = k;
 }
 
+// Validar indíce
+int validate_curso(curso lista_cursos_S[], int contA, int codigo_procurado) {
+
+    int inicio = 0;
+    int fim = contA;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (lista_cursos_S[meio].codigo == codigo_procurado) {
+            return meio;
+        }
+        
+        if (lista_cursos_S[meio].codigo < codigo_procurado) {
+            inicio = meio + 1;
+        }
+        else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+
+// Listar cursos
 void listar_cursos(curso lista_cursos[], int contA_curso) {
 
     if (contA_curso == 0) {
@@ -76,7 +101,7 @@ void ler_curso_S(curso lista_cursos_S[], int &contS) {
     for (int i = 0; i < T_CURSO;) {
         
         curso curso_controle;
-        bool codigo_duplicado = false;
+        int is_duplicado;
 
         cout << "-----Leitura Curso-----";
 
@@ -84,21 +109,12 @@ void ler_curso_S(curso lista_cursos_S[], int &contS) {
         cin >> curso_controle.codigo;
         cin.ignore();
 
-        // Verifição para ver se o usuário não está digitando um mesmo código já adicionado
-        if (i != 0) {
+        is_duplicado = validate_curso(lista_cursos_S, contS, curso_controle.codigo);
 
-            for (int j = 0; j < contS; j++) {
-
-                if (curso_controle.codigo == lista_cursos_S[j].codigo) {
+        if (is_duplicado != -1) {
                     
-                    cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
-                    codigo_duplicado = true;
-                    break;
-                }
-            }
-        }
-
-        if (codigo_duplicado) {
+            cout << "\nCódigo duplicado!!!";
+            cout << "\nDigite um código diferente\n\n";
             continue;
         }
 
@@ -143,7 +159,7 @@ void ler_curso_T(curso lista_cursos_S[],
         }
 
         curso curso_controle;
-        bool codigo_duplicado = false;
+        int is_duplicado;
 
         cout << "-----Leitura Curso-----";
 
@@ -151,19 +167,15 @@ void ler_curso_T(curso lista_cursos_S[],
         cin >> curso_controle.codigo;
         cin.ignore();
 
-        // Verifição para ver se o usuário não está digitando um mesmo código já adicionado
-        for (int j = 0; j < (contT + contS); j++) {
+        is_duplicado = validate_curso(lista_cursos_S, contS, curso_controle.codigo);
+        is_duplicado += validate_curso(lista_cursos_T, contT, curso_controle.codigo);
 
-            if (curso_controle.codigo == lista_cursos_S[j].codigo ||
-                curso_controle.codigo == lista_cursos_T[j].codigo) {
+        if (is_duplicado >= -1) {
                 
-                cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n";
-                codigo_duplicado = true;
-                break;
-            }
+            cout << "\nCódigo duplicado!!!";
+            cout << "\nDigite um código diferente\n\n";
+            continue;
         }
-
-        if (codigo_duplicado) continue;
 
         cout << "Digite a descrição do curso: ";
         getline(cin, curso_controle.descricao);

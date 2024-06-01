@@ -54,14 +54,19 @@ void inicioPrograma() {
 
         // "Interface"
         system("cls");
-        cout << "OPÇÕES: [1] Adicionar Cidade    [12] Buscar cidade\n";
-        cout << "        [2] Adicionar Curso     [22] Listar cursos\n";
-        cout << "        [3] Adicionar Instrutor [32] Listar instrutores\n";
-        cout << "        [4] Adicionar Aluno     [42] Excluir aluno\n";
-        cout << "        [5] Adicionar Turma     [52] Listar turmas cheias";
-        cout << "\n                                [53] Buscar turma\n";
-        cout << "        [6] Adicionar Matricula [62] Listar matriculas\n";
-        
+
+        cout << "_______________Empresa de treinamentos_______________\n\n";
+
+        cout << "______________________OPÇÕES_________________________\n";
+        cout << "| [1] Adicionar Cidade    [12] Buscar cidade        |\n";
+        cout << "| [2] Adicionar Curso     [22] Listar cursos        |\n";
+        cout << "| [3] Adicionar Instrutor [32] Listar instrutores   |\n";
+        cout << "| [4] Adicionar Aluno     [42] Excluir aluno        |\n";
+        cout << "| [5] Adicionar Turma     [52] Listar turmas cheias |\n";
+        cout << "|                         [53] Buscar turma         |\n";
+        cout << "| [6] Adicionar Matricula [62] Listar matriculas    |\n";
+        cout << "-----------------------------------------------------\n";
+
         cout << "\nEscolha: ";
         cin >> opcao;
 

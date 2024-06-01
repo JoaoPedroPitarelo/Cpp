@@ -51,29 +51,6 @@ void incluir_instrutor(instrutor lista_instrutores_S[],
     contA = k;
 }
 
-int validate_cidade(cidade lista_cidades_S[], int contA, int codigo_procurado) {
-    
-    int inicio = 0;
-    int fim = contA;
-
-    while (inicio <= fim) {
-        int meio = (inicio + fim) / 2;
-
-        if (lista_cidades_S[meio].codigo == codigo_procurado) {
-            return meio;
-        }
-        
-        if (lista_cidades_S[meio].codigo < codigo_procurado) {
-            inicio = meio + 1;
-        }
-        else {
-            fim = meio - 1;
-        }
-    }
-
-    return -1;
-}
-
 void listar_instrutores(instrutor lista_instrutores[], int contA_instrutor) {
 
     if (contA_instrutor == 0) {
@@ -91,6 +68,29 @@ void listar_instrutores(instrutor lista_instrutores[], int contA_instrutor) {
             cout << "\nCódigo da cidade: " << lista_instrutores[i].codigo_cidade << "\n";
         }
     }
+}
+
+int validate_instrutor(instrutor lista_instrutores_S[], int contA, int codigo_procurado) {
+
+    int inicio = 0;
+    int fim = contA;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (lista_instrutores_S[meio].codigo == codigo_procurado) {
+            return meio;
+        }
+        
+        if (lista_instrutores_S[meio].codigo < codigo_procurado) {
+            inicio = meio + 1;
+        }
+        else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
 }
 
 // Primeira leitura
@@ -115,8 +115,7 @@ void ler_instrutor_S(instrutor lista_instrutores_S[],
         }
 
         instrutor instrutor_controle;
-        bool codigo_duplicado = false;
-        bool cidade_valida = false;
+        int is_duplicado;
 
         cout << "---- Ler Instrutor ----\n";
 
@@ -124,21 +123,14 @@ void ler_instrutor_S(instrutor lista_instrutores_S[],
         cin >> instrutor_controle.codigo;
         cin.ignore();
 
-        // Verificação para ver se o usuário não está digitando um mesmo código já digitado
-        if (i != 0) {
+        is_duplicado = validate_instrutor(lista_instrutores_S, contS_instrutor, instrutor_controle.codigo);
 
-            for (int j = 0; j < contS_instrutor; j++) {
-
-                if (instrutor_controle.codigo == lista_instrutores_S[j].codigo) {
-
-                    cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n\n";
-                    codigo_duplicado = true;
-                    break;
-                }
-            }
+        if (is_duplicado != -1) {
+            
+        	cout << "\nCódigo duplicado!!!";
+            cout << "\nDigite um código diferente\n\n";
+            continue;
         }
-
-        if (codigo_duplicado) continue;
 
         cout << "Digite o nome do instrutor  : ";
         getline(cin, instrutor_controle.nome);
@@ -185,7 +177,6 @@ void ler_instrutor_T(instrutor lista_instrutores_S[],
     int i = 0;
     contT_instrutor = 0;
     int controle = 0;
-    bool cidade_valida = false;
 
     for (; i < T_INSTRUTOR;) {
 
@@ -200,7 +191,7 @@ void ler_instrutor_T(instrutor lista_instrutores_S[],
         }
 
         instrutor instrutor_controle;
-        bool codigo_duplicado = false;
+        int is_duplicado;
 
         cout << "----Ler instrutor----\n";
 
@@ -208,20 +199,16 @@ void ler_instrutor_T(instrutor lista_instrutores_S[],
         cin >> instrutor_controle.codigo;
         cin.ignore();
 
-        // Verificação para ver se o usuário não está digitando um código já digitado
-        for (int j = 0; j < (contT_instrutor + contS_instrutor); j++) {
+        is_duplicado = validate_instrutor(lista_instrutores_S, contS_instrutor, instrutor_controle.codigo);
+        is_duplicado += validate_instrutor(lista_instrutores_T, contT_instrutor, instrutor_controle.codigo);
+
+        if (is_duplicado >= -1) {
             
-            if (instrutor_controle.codigo == lista_instrutores_S[j].codigo ||
-                instrutor_controle.codigo == lista_instrutores_T[j].codigo) {
-
-                cout << "\nCÓDIGO DUPLICADO! Digite um código diferente!\n\n";
-                codigo_duplicado = true;
-                break;
-            }
+            cout << "\nCódigo duplicado!!!";
+            cout << "\nDigite um código diferente\n\n";
+            continue;
         }
-
-        if (codigo_duplicado) continue;
-
+       
         cout << "Digite o nome do instrutor  : ";
         getline(cin, instrutor_controle.nome);
 
